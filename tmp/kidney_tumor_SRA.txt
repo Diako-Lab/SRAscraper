@@ -1,0 +1,1445 @@
+
+1. Single-cell transcriptome profiling for metastatic renal cell carcinoma patient-derived cells [RNA-seq]
+(Submitter supplied) Clear cell renal cell carcinoma (ccRCC) initiated from the renal epithelium is the most prevalent histological type of adult kidney cancers. Dissecting intratumoral heterogeneity (ITH) of ccRCC has leveraged to extend our knowledge on how primary tumors harboring driver mutations evolve and spread to other sites. The cellular fractions within and across the primary (pRCC) and metastatic RCC (mRCC) are heterogeneous in both their genetic and biological features determining the variability in clinical aggressiveness and sensitivity to the therapy. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL16791 121 Samples
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE73nnn/GSE73121/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA296119
+Series		Accession: GSE73121	ID: 200073121
+
+2. Mapping the genetic architecture of human traits to cell types in the kidney identifies mechanisms of disease and potential treatments [RNA-seq]
+(Submitter supplied) The functional interpretation of GWAS remains challenging due to the cell-type dependent influences of genetic variants. Here, we generated comprehensive maps of expression quantitative trait loci (eQTL) for 659 microdissected human kidney samples and identified cell-type eQTLs by mapping interactions between cell type abundance and genotype. By partitioning heritability using stratified LD-score regression to integrate GWAS with scRNA-seq and snATAC-seq data, we prioritized proximal tubules in kidney function and endothelial cells and distal tubule segments in blood pressure pathogenesis. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL16791 68 Samples
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE173nnn/GSE173343/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA725213
+Series		Accession: GSE173343	ID: 200173343
+
+3. LN-stem, tumor stem, tumor terminally differentiated CD8 T cells from human kidney cancer
+(Submitter supplied) This work aimed to understand the source of TCF1+ CD8 T cells in tumors. By studying human tumor draining lymph-nodes (TDLNs), we find that CD8 T cells activate in TDLN but fail to acquire the normal effector program. Instead, these CD8 T cells share functional, transcriptional, and epigenetic traits with TCF1+ stem-like cells in the tumor. This suggests that these activated cells are a precursor to the stem-like CD8 T cells in tumors. more...
+Organism:	Homo sapiens; Mus musculus
+Type:		Expression profiling by high throughput sequencing; Methylation profiling by high throughput sequencing
+4 related Platforms 67 Samples
+FTP download: GEO (CSV, MTX, TSV, XLSX) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE216nnn/GSE216731/
+Series		Accession: GSE216731	ID: 200216731
+
+4. Dissecting the immune suppressive human prostate tumor microenvironment via integrated single-cell and spatial transcriptomic analyses
+(Submitter supplied) Novel single cell technologies have paved the way for the characterization and improved biological understanding of prostate cancer, here we performed scRNA-seq on 20 human prostate tumors and their matched adjacent-normal tissues in addition to 5 healthy prostate tissues. We have provided a high-resolution transcriptome-wide expression analysis (droplet-based 10x genomics) to examine tumors from patients with localized prostate cancer across a spectrum of primary tumor stages and grades. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL18573 51 Samples
+FTP download: GEO (CSV, MTX) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE181nnn/GSE181294/
+Series		Accession: GSE181294	ID: 200181294
+
+5. A single-cell map of dynamic chromatin landscapes of immune cells in renal cell carcinoma (scRNA-Seq and TCR-Seq)
+(Submitter supplied) A complete chart of the chromatin regulatory elements of immune cells in patients with cancer and their dynamic behavior is necessary to understand the developmental fates and to guide therapeutic strategies. Here, we map, at the single-cell level, the chromatin landscape of immune cells from blood, normal adjacent kidney, and malignant tissue from patients with early-stage clear cell renal cell carcinoma (ccRCC). Specifically in T cells, we catalogue the various cell states dictated by tissue- and developmental stage-specific chromatin accessibility patterns and we infer key chromatin regulators of these states. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing; Other
+Platform: GPL18573 44 Samples
+FTP download: GEO (CSV, MTX, TSV, TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE181nnn/GSE181061/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA750491
+Series		Accession: GSE181061	ID: 200181061
+
+6. Exhausted intratumoral Vδ2- γδ T cells in human kidney cancer retain effector function [bulk RNA-seq]
+(Submitter supplied) Gamma delta (γδ) T cells reside within human tissues including tumors, but their role in mediating anti-tumor response with immune checkpoint inhibition is unknown. Using single-cell approaches, we found that kidney cancers are infiltrated by diverse Vδ2- γδ T cells, with equivalent representation of Vδ1+ and Vδ1- cells, that are distinct from γδ T cells found in normal human tissues. These tumor-resident Vδ2- T cells can express the transcriptional program of exhausted alpha beta (ab) CD8+ T cells as well as canonical markers of terminal T cell exhaustion including PD-1, TIGIT and TIM-3. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL20301 42 Samples
+FTP download: GEO (VCF) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE223nnn/GSE223806/
+Series		Accession: GSE223806	ID: 200223806
+
+7. Single-cell transcriptional profiling of clear cell renal cell carcinoma reveals an invasive tumor vasculature phenotype
+(Submitter supplied) Clear cell renal cell carcinoma (ccRCC) is the most prevalent form of renal cancer, accounting for over 75% of cases. The asymptomatic nature of the disease contributes to late-stage diagnoses and poor survival. Highly vascularized and immune infiltrated microenvironment are prominent features of ccRCC, yet the interplay between vasculature and immune cells, disease progression and response to therapy remains poorly understood. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL21697 31 Samples
+FTP download: GEO (H5AD, MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE242nnn/GSE242299/
+Series		Accession: GSE242299	ID: 200242299
+
+8. Cancer cell states recur across tumor types and form specific interactions with the tumor microenvironment
+(Submitter supplied) Transcriptional heterogeneity among malignant cells of a tumor has been studied in individual cancer types and shown to be organized into cancer cell states; however, it remains unclear to what extent these states span tumor types, constituting general features of cancer. Here, we perform a pan-cancer single-cell RNA-Seq analysis across 15 cancer types and identify a catalog of gene modules whose expression defines recurrent cancer cell states including ‘stress’, ‘interferon response’, ‘epithelial-mesenchymal transition’, ‘metal response’, ‘basal’ and ‘ciliated’. more...
+Organism:	Homo sapiens; Mus musculus
+Type:		Expression profiling by high throughput sequencing
+Platforms: GPL19415 GPL18573 GPL19057 31 Samples
+FTP download: GEO (CSV, H5, JPG, JSON, MTX, PNG, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE203nnn/GSE203612/
+Series		Accession: GSE203612	ID: 200203612
+
+9. FD-seq: Droplet-based RNA sequencing of fixed single cells
+(Submitter supplied) Current high-throughput single-cell RNA sequencing (scRNA-seq) methods are incompatible with paraformaldehyde (PFA) fixation, a common cell/tissue preservation and viral inactivation technique, which has prevented transcriptomic analysis of rare cells that require protein staining and enrichment. Here we present FD-seq, a method for high-throughput RNA sequencing of PFA-fixed, stained and FACS-sorted single cells. more...
+Organism:	Mus musculus; Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platforms: GPL21697 GPL24625 31 Samples
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE156nnn/GSE156988/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA659731
+Series		Accession: GSE156988	ID: 200156988
+
+10. A single-cell map of dynamic chromatin landscapes of immune cells in renal cell carcinoma (scATAC-Seq)
+(Submitter supplied) A complete chart of the chromatin regulatory elements of immune cells in patients with cancer and their dynamic behavior is necessary to understand the developmental fates and to guide therapeutic strategies. Here, we map, at the single-cell level, the chromatin landscape of immune cells from blood, normal adjacent kidney, and malignant tissue from patients with early-stage clear cell renal cell carcinoma (ccRCC). Specifically in T cells, we catalogue the various cell states dictated by tissue- and developmental stage-specific chromatin accessibility patterns and we infer key chromatin regulators of these states. more...
+Organism:	Homo sapiens
+Type:		Genome binding/occupancy profiling by high throughput sequencing
+Platform: GPL18573 20 Samples
+FTP download: GEO (TSV, TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE181nnn/GSE181062/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA750490
+Series		Accession: GSE181062	ID: 200181062
+
+11. Gene expression profile and TCR sequencing data of CD45+ cells sorted from single cell suspensions of tumors after in vitro anti-CD3 stimulation and treatments
+(Submitter supplied) We aimed to analyze the transcriptomic difference of tumor-infiltrating immune cells treated with anti-PD-1 blockade and/or HPK1 inhibitor.
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing; Other
+Platform: GPL16791 16 Samples
+FTP download: GEO (TAR) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE220nnn/GSE220313/
+Series		Accession: GSE220313	ID: 200220313
+
+12. Midkine expression by stem-like tumor cells drives persistence to mTOR inhibition and rewires the microenvironment toward an immune-suppressive state
+(Submitter supplied) mTORC1 regulates cell metabolism to enable cell proliferation, and is hyperactive in multiple cancer types1,2. Here, we performed integrative analysis of single cell transcriptomic profiling, paired T cell receptor (TCR) sequencing, and spatial transcriptomic profiling on Tuberous Sclerosis Complex (TSC) associated tumors with mTORC1 hyperactivity, and identified a stem-like tumor cell state (SLS) linked to T cell dysfunction via tumor-modulated immunosuppressive macrophages. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL18573 16 Samples
+FTP download: GEO (TAR) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE190nnn/GSE190260/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA786555
+Series		Accession: GSE190260	ID: 200190260
+
+13. Single cell analysis reveals intra-tumor heterogeneity and microenvironment for clear cell renal cell carcinoma
+(Submitter supplied) Here we performed 3’ transcriptome single cell sequencing on 7 ccRCC patients’ tumor and matched 5 adjacent normal samples. We identified two different functional subgroups in ccRCC tumor epithelial cells and two different gene transcriptional programs that were associated with survival across a TCGA cohort. We found important transcriptional factor regulons that played roles in ccRCC progression. We identified macrophage and T cell clusters whose higher infiltration in tumor was associated with overall survival. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL24676 12 Samples
+FTP download: GEO (CSV) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE156nnn/GSE156632/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA658558
+Series		Accession: GSE156632	ID: 200156632
+
+14. Mesenchymal-like tumor cells and myofibroblastic cancer-associated fibroblasts are associated with progression and immunotherapy response of clear-cell renal cell carcinoma [scRNA-seq]
+(Submitter supplied) Immune checkpoint inhibitors (ICI) represent the cornerstone for treatment of patients with metastatic clear-cell renal cell carcinoma (ccRCC). Despite a favorable response for a subset of patients, others experience primary progressive disease highlighting the need to precisely understand plasticity of cancer cells and their crosstalk with the microenvironment to better predict therapeutic response and personalize treatment. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platforms: GPL20301 GPL21697 9 Samples
+FTP download: GEO (TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE210nnn/GSE210038/
+Series		Accession: GSE210038	ID: 200210038
+
+15. Integrated multiomics profiling identifies the differentiation program of regulatory T cells in human tumors [scRNA-seq]
+(Submitter supplied) Regulatory T (Treg) cells suppress effective antitumor immunity in tumor-bearing hosts, thereby becoming promising targets in cancer immunotherapy. Here, we show that Treg cells in the tumor microenvironment (TME) of human lung cancers harbor a completely different open chromatin profile compared to effector T cells and peripheral Treg cells. The integrative sequencing analyses revealed that BATF, IRF4, NF-κb, and NR4A were important transcription factors for Treg cell differentiation in the TME. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL24676 9 Samples
+FTP download: GEO (H5) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE211nnn/GSE211068/
+Series		Accession: GSE211068	ID: 200211068
+
+16. scFTD-seq: freeze-thaw lysis based, portable approach toward highly distributed single-cell 3’ mRNA profiling
+(Submitter supplied) We present sc-FTDseq, a microchip platform for single-cell freeze-thaw lysis directly toward 3’ mRNA sequencing. It offers format flexibility with a much simplified, widely adoptable workflow that reduces the number of preparation steps and hands-on time, with the quality of data and the cost per sample matching that of the state-of-the-art scRNA-seq platforms. Freeze-thaw, known as an unfavorable lysis method resulting in RNA fragmentation, turns out to be fully compatible with single-cell 3’ mRNA sequencing, which detects only ~50 bases at the 3’ end. more...
+Organism:	Homo sapiens; Mus musculus
+Type:		Expression profiling by high throughput sequencing
+Platforms: GPL17021 GPL22245 GPL16791 9 Samples
+FTP download: GEO (TXT, XLSX) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE109nnn/GSE109535/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA431313
+Series		Accession: GSE109535	ID: 200109535
+
+17. Single-cell transcriptomics reveals distinct molecular alterations of human renal cell carcinoma-derived endothelial cells that are stable in ex vivo primary culture [scRNA-seq]
+(Submitter supplied) Even though tumor endothelial cells are a key component of the tumor microenvironment and represent the main interface between tumor cells and the host’s circulation and immune system, their phenotypes and functional properties are relatively poorly understood. To address this deficit, we purified tumor and matched normal endothelial cells from highly vascularized kidney cancer specimens and performed single cell RNA-seq to characterize endothelial cell gene expression patterns and heterogeneity. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL24676 8 Samples
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE237nnn/GSE237425/
+Series		Accession: GSE237425	ID: 200237425
+
+18. Immune Restoring (IR) CAR-T Cells Display Superior Antitumor Activity and Reverse Immunosuppressive TME in a Humanized ccRCC Orthotopic Mouse Model
+(Submitter supplied) Here we report a humanized clear cell renal cell carcinoma (ccRCC) orthotopic NSG-SGM3  mouse model (hccRCC-NSG-SGM3) with reconstituted human lymphocytes derived from fetal CD34+ hematopoietic stem cells (HSCs) bearing human ccRCC skrc-59 cells under the kidney capsule. Human leukocyte antigen (HLA) matched CD34+ HSCs were used for the humanization to reduce T cell alloreactivity against skrc-59 human ccRCC cells. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL24676 8 Samples
+FTP download: GEO (CSV, MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE210nnn/GSE210664/
+Series		Accession: GSE210664	ID: 200210664
+
+19. Tumor and immune remodeling following radiotherapy in human renal cell carcinoma
+(Submitter supplied) We performed single-cell analysis of renal cell carcinoma tumors from patients treated with or without radiotherapy to address how treatment shapes the immune compartment and interactions with cancer cells.  We identified increased transition from stem-like T cell populations to effector and exhausted T cells in irradiated tumors.
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL24676 6 Samples
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE202nnn/GSE202374/
+Series		Accession: GSE202374	ID: 200202374
+
+20. Single-Cell RNA Sequencing in Multiple Pathologic Types of Renal Cell Carcinoma Revealed Novel Potential Tumor-Specific Markers
+(Submitter supplied) We provide a comprehensive, single-cell resolution, multiple pathologic transcriptome map of renal cell carcinoma (RCC).A total of 4 tumor samples and 1 normal kidney sample from four patients with renal cell carcinoma participated in this study.We present 30,263 cells (pRCC=10,132, ccRCC=12,915,chRCC=7,216,normal=585) after strictly quality control.scRNA-seq analysis revealed tumor heterogeneity at the single-cell level between different pathological types or between different cell types of the same pathological type. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL20795 5 Samples
+FTP download: GEO (TAR) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE152nnn/GSE152938/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA641020
+Series		Accession: GSE152938	ID: 200152938
+
+21. SMARCB1 regulates a TFCP2L1-MYC transcriptional switch promoting renal medullary carcinoma transformation and ferroptosis resistance.. [scRNAseq]
+(Submitter supplied) Renal medullary carcinoma (RMC) is an aggressive tumour driven by bi-allelic loss of SMARCB1 and tightly associated with sickle cell trait. However, the cell-of-origin and oncogenic mechanism remain poorly understood. Using single-cell sequencing of human RMC, we defined transformation of thick ascending limb (TAL) cells into an epithelial-mesenchymal gradient of RMC cells associated with loss of renal epithelial transcription factors TFCP2L1, HOXB9 and MITF and gain of MYC and NFE2L2-associated oncogenic and ferroptosis resistance programs. more...
+Organism:	Homo sapiens; Mus musculus
+Type:		Expression profiling by high throughput sequencing
+Platforms: GPL25431 GPL20301 4 Samples
+FTP download: GEO (TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE181nnn/GSE181000/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA750394
+Series		Accession: GSE181000	ID: 200181000
+
+22. Exhausted intratumoral Vδ2- γδ T cells in human kidney cancer retain effector function [scRNA-seq]
+(Submitter supplied) Gamma delta (γδ) T cells reside within human tissues including tumors, but their role in mediating anti-tumor response with immune checkpoint inhibition is unknown. Using single-cell approaches, we found that kidney cancers are infiltrated by diverse Vδ2- γδ T cells, with equivalent representation of Vδ1+ and Vδ1- cells, that are distinct from γδ T cells found in normal human tissues. These tumor-resident Vδ2- T cells can express the transcriptional program of exhausted alpha beta (ab) CD8+ T cells as well as canonical markers of terminal T cell exhaustion including PD-1, TIGIT and TIM-3. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing; Other
+Platform: GPL24676 4 Samples
+FTP download: GEO (CSV, JSON, MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE223nnn/GSE223808/
+Series		Accession: GSE223808	ID: 200223808
+
+23. Single-cell RNA sequencing of metastatic testicular seminoma reveals the cellular and molecular characteristics of metastatic cell lineage
+(Submitter supplied) Testicular cancer is the most common solid malignancy in young men. Given the many histological classifications of testicular tumours, seminoma is one of the most treatable cancers. The survival rate in early-stage disease was more than 90%. Thus, seminoma at the cellular and molecular levels, especially at the single-cell level, is worth studying. We performed a single-cell RNA sequencing (scRNA-seq) study on a patient who was diagnosed with testicular seminoma with lymph node metastasis. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL20795 4 Samples
+FTP download: GEO (TAR) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE197nnn/GSE197778/
+Series		Accession: GSE197778	ID: 200197778
+
+24. Gene expression profile at single cell level of Wilms tumors and normal kidney tissues from an infant with Denys-Drash syndrom
+(Submitter supplied) Denys-Drash syndrom is a rare disease. We used single cell RNA sequencing (scRNA-seq) to analyze the diversity of kidney tissue cells in an infant with Denys-Drash syndrom.
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL18573 3 Samples
+FTP download: GEO (TAR) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE223nnn/GSE223373/
+Series		Accession: GSE223373	ID: 200223373
+
+25. Transcriptome profiling between unfavorable and favorable Wilms Tumors and against human fetal kidney
+(Submitter supplied) Purpose: The 10x Genomics Visium platform allows us to define the spatial topography of gene expression and provides detailed molecular maps that overcome limitations associated with sn/scRNA-seq and microscopy-based spatial transcriptomics methods. The goals of this study are to compare and identify unique transcriptome profiling (RNA-seq) signature between unfavorable and favorable Wilms Tumors and against human fetal kidney. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL24676 3 Samples
+FTP download: GEO (CSV) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE178nnn/GSE178349/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA738529
+Series		Accession: GSE178349	ID: 200178349
+
+26. Tuberous sclerosis complex renal lesion pleiotropy arises from multiple aberrant developmental processes
+(Submitter supplied) Tuberous sclerosis complex (TSC) is a multisystem tumor-forming disorder caused by loss of TSC1 or TSC2. Renal manifestations predominately include cysts and angiomyolipomas. Despite a well-described monogenic etiology, the cellular pathogenesis has remained elusive. Here, we report a novel genetically-engineered human renal organoid model which recapitulates pleiotropic features of TSC kidney disease in vitro and upon orthotopic xenotransplantation. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL18573 3 Samples
+FTP download: GEO (CSV, RDS) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE182nnn/GSE182632/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA757137
+Series		Accession: GSE182632	ID: 200182632
+
+27. Immune landscape of PBMC based on single-cell rna sequancing in End Stage Renal Disease
+(Submitter supplied) Although an increase in studies has revealed the potential mechanisms underlying immune dysfunction during CKD progression, there are still many significant components that need to be clarified, such as the machinery of T-cell phenotype switching and the plasticity levels of different subsets. Fortunately, in the last decade, novel technologies such as single-cell RNA sequencing have enabled us to investigate transcriptomic profiles at the single-cell level and have enabled us to unravel the potential mechanisms of the heterogeneity of the cell phenotype underlying different diseases. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL24676 2 Samples
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE233nnn/GSE233315/
+Series		Accession: GSE233315	ID: 200233315
+
+28. Mapping the genetic architecture of human traits to cell types in the kidney identifies mechanisms of disease and potential treatments
+(Submitter supplied) The functional interpretation of GWAS remains challenging due to the cell-type dependent influences of genetic variants. Here, we generated comprehensive maps of expression quantitative trait loci (eQTL) for 659 microdissected human kidney samples and identified cell-type eQTLs by mapping interactions between cell type abundance and genotype. By partitioning heritability using stratified LD-score regression to integrate GWAS with scRNA-seq and snATAC-seq data, we prioritized proximal tubules in kidney function and endothelial cells and distal tubule segments in blood pressure pathogenesis. more...
+Organism:	Homo sapiens
+Type:		Genome binding/occupancy profiling by high throughput sequencing
+Platform: GPL20301 2 Samples
+FTP download: GEO (BED, TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE172nnn/GSE172008/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA721690
+Series		Accession: GSE172008	ID: 200172008
+
+29. Cytotoxic Innate Lymphoid Cells Sense Cancer Cell-Expressed Interleukin-15 to Suppress Human and Murine Malignancies
+(Submitter supplied) Malignancy can be suppressed by the immune system. However, the classes of immunosurveillance responses and their mode of tumor sensing remain incompletely understood. Here, we show that while clear cell renal cell carcinoma (ccRCC) was infiltrated by exhaustion-phenotype CD8+ T cells which negatively correlated with patient prognosis, chromophobe RCC had abundant infiltration of granzyme A-expressing intraepithelial type 1 innate lymphoid cells (ILC1s) that positively associated with patient survival. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL24676 1 Sample
+FTP download: GEO (RDS, TSV, TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE199nnn/GSE199798/
+Series		Accession: GSE199798	ID: 200199798
+
+30. patient 9 healthy-adjacent kidney, emulsion 1, scRNA-seq
+Organism:	Homo sapiens
+Source name:	healthy-adjacent kidney
+Platform: GPL21697 Series: GSE242299 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM7757nnn/GSM7757863/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX21635815
+Sample		Accession: GSM7757863	ID: 307757863
+
+31. patient 8 healthy-adjacent kidney, emulsion 1, scRNA-seq
+Organism:	Homo sapiens
+Source name:	healthy-adjacent kidney
+Platform: GPL21697 Series: GSE242299 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM7757nnn/GSM7757862/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX21635814
+Sample		Accession: GSM7757862	ID: 307757862
+
+32. patient 7 healthy-adjacent kidney, emulsion 1, scRNA-seq
+Organism:	Homo sapiens
+Source name:	healthy-adjacent kidney
+Platform: GPL21697 Series: GSE242299 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM7757nnn/GSM7757861/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX21635813
+Sample		Accession: GSM7757861	ID: 307757861
+
+33. patient 6 healthy-adjacent kidney, emulsion 1, scRNA-seq
+Organism:	Homo sapiens
+Source name:	healthy-adjacent kidney
+Platform: GPL21697 Series: GSE242299 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM7757nnn/GSM7757860/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX21635812
+Sample		Accession: GSM7757860	ID: 307757860
+
+34. patient 5 healthy-adjacent kidney, emulsion 1, scRNA-seq
+Organism:	Homo sapiens
+Source name:	healthy-adjacent kidney
+Platform: GPL21697 Series: GSE242299 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM7757nnn/GSM7757859/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX21635811
+Sample		Accession: GSM7757859	ID: 307757859
+
+35. patient 4 healthy-adjacent kidney, emulsion 2, scRNA-seq
+Organism:	Homo sapiens
+Source name:	healthy-adjacent kidney
+Platform: GPL21697 Series: GSE242299 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM7757nnn/GSM7757858/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX21635810
+Sample		Accession: GSM7757858	ID: 307757858
+
+36. patient 4 healthy-adjacent kidney, emulsion 1, scRNA-seq
+Organism:	Homo sapiens
+Source name:	healthy-adjacent kidney
+Platform: GPL21697 Series: GSE242299 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM7757nnn/GSM7757857/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX21635831
+Sample		Accession: GSM7757857	ID: 307757857
+
+37. patient 3 healthy-adjacent kidney, emulsion 2, scRNA-seq
+Organism:	Homo sapiens
+Source name:	healthy-adjacent kidney
+Platform: GPL21697 Series: GSE242299 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM7757nnn/GSM7757856/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX21635830
+Sample		Accession: GSM7757856	ID: 307757856
+
+38. patient 3 healthy-adjacent kidney, emulsion 1, scRNA-seq
+Organism:	Homo sapiens
+Source name:	healthy-adjacent kidney
+Platform: GPL21697 Series: GSE242299 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM7757nnn/GSM7757855/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX21635829
+Sample		Accession: GSM7757855	ID: 307757855
+
+39. patient 2 healthy-adjacent kidney, emulsion 2, scRNA-seq
+Organism:	Homo sapiens
+Source name:	healthy-adjacent kidney
+Platform: GPL21697 Series: GSE242299 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM7757nnn/GSM7757854/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX21635828
+Sample		Accession: GSM7757854	ID: 307757854
+
+40. patient 2 healthy-adjacent kidney, emulsion 1, scRNA-seq
+Organism:	Homo sapiens
+Source name:	healthy-adjacent kidney
+Platform: GPL21697 Series: GSE242299 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM7757nnn/GSM7757853/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX21635827
+Sample		Accession: GSM7757853	ID: 307757853
+
+41. patient 1 healthy-adjacent kidney, emulsion 1, scRNA-seq
+Organism:	Homo sapiens
+Source name:	healthy-adjacent kidney
+Platform: GPL21697 Series: GSE242299 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM7757nnn/GSM7757852/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX21635826
+Sample		Accession: GSM7757852	ID: 307757852
+
+42. Sample 6 (P15 - RS02098409)
+Organism:	Homo sapiens
+Source name:	Renal cell carcinoma
+Platform: GPL24676 Series: GSE202374 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM6112nnn/GSM6112174/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX15187284
+Sample		Accession: GSM6112174	ID: 306112174
+
+43. Sample 5 (P14 - RS02065737)
+Organism:	Homo sapiens
+Source name:	Renal cell carcinoma
+Platform: GPL24676 Series: GSE202374 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM6112nnn/GSM6112173/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX15187283
+Sample		Accession: GSM6112173	ID: 306112173
+
+44. Sample 4 (P10 - RS01985670)
+Organism:	Homo sapiens
+Source name:	Renal cell carcinoma
+Platform: GPL24676 Series: GSE202374 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM6112nnn/GSM6112172/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX15187282
+Sample		Accession: GSM6112172	ID: 306112172
+
+45. Sample 3 (P6 - RS01813260)
+Organism:	Homo sapiens
+Source name:	Renal cell carcinoma
+Platform: GPL24676 Series: GSE202374 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM6112nnn/GSM6112171/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX15187281
+Sample		Accession: GSM6112171	ID: 306112171
+
+46. Sample 2 (C23 - RS01519713)
+Organism:	Homo sapiens
+Source name:	Renal cell carcinoma
+Platform: GPL24676 Series: GSE202374 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM6112nnn/GSM6112170/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX15187280
+Sample		Accession: GSM6112170	ID: 306112170
+
+47. Sample 1 (C1 - RS00123497)
+Organism:	Homo sapiens
+Source name:	Renal cell carcinoma
+Platform: GPL24676 Series: GSE202374 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM6112nnn/GSM6112169/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX15187279
+Sample		Accession: GSM6112169	ID: 306112169
+
+48. Human_scRNA-seq_K416_APC
+Organism:	Homo sapiens
+Source name:	Tumor
+Platform: GPL21290 Series: GSE216731 
+FTP download: GEO (MTX, TSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM6862nnn/GSM6862355/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX18916768
+Sample		Accession: GSM6862355	ID: 306862355
+
+49. Human_scRNA-seq_K297_APC
+Organism:	Homo sapiens
+Source name:	Tumor
+Platform: GPL21290 Series: GSE216731 
+FTP download: GEO (CSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM6862nnn/GSM6862354/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX18916767
+Sample		Accession: GSM6862354	ID: 306862354
+
+50. Patient #7t-scRNA
+Organism:	Homo sapiens
+Source name:	ccRCC tumor tissue
+Platform: GPL24676 Series: GSE156632 
+FTP download: GEO (CSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4735nnn/GSM4735375/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX8983881
+Sample		Accession: GSM4735375	ID: 304735375
+
+51. Patient #6t-scRNA
+Organism:	Homo sapiens
+Source name:	ccRCC tumor tissue
+Platform: GPL24676 Series: GSE156632 
+FTP download: GEO (CSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4735nnn/GSM4735374/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX8983880
+Sample		Accession: GSM4735374	ID: 304735374
+
+52. Patient #5n-scRNA
+Organism:	Homo sapiens
+Source name:	ccRCC para-tumor tissue
+Platform: GPL24676 Series: GSE156632 
+FTP download: GEO (CSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4735nnn/GSM4735373/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX8983879
+Sample		Accession: GSM4735373	ID: 304735373
+
+53. Patient #5t-scRNA
+Organism:	Homo sapiens
+Source name:	ccRCC tumor tissue
+Platform: GPL24676 Series: GSE156632 
+FTP download: GEO (CSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4735nnn/GSM4735372/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX8983878
+Sample		Accession: GSM4735372	ID: 304735372
+
+54. Patient #4n-scRNA
+Organism:	Homo sapiens
+Source name:	ccRCC para-tumor tissue
+Platform: GPL24676 Series: GSE156632 
+FTP download: GEO (CSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4735nnn/GSM4735371/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX8983877
+Sample		Accession: GSM4735371	ID: 304735371
+
+55. Patient #4t-scRNA
+Organism:	Homo sapiens
+Source name:	ccRCC tumor tissue
+Platform: GPL24676 Series: GSE156632 
+FTP download: GEO (CSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4735nnn/GSM4735370/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX8983876
+Sample		Accession: GSM4735370	ID: 304735370
+
+56. Patient #3n-scRNA
+Organism:	Homo sapiens
+Source name:	ccRCC para-tumor tissue
+Platform: GPL24676 Series: GSE156632 
+FTP download: GEO (CSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4735nnn/GSM4735369/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX8983875
+Sample		Accession: GSM4735369	ID: 304735369
+
+57. Patient #3t-scRNA
+Organism:	Homo sapiens
+Source name:	ccRCC tumor tissue
+Platform: GPL24676 Series: GSE156632 
+FTP download: GEO (CSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4735nnn/GSM4735368/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX8983874
+Sample		Accession: GSM4735368	ID: 304735368
+
+58. Patient #2n-scRNA
+Organism:	Homo sapiens
+Source name:	ccRCC para-tumor tissue
+Platform: GPL24676 Series: GSE156632 
+FTP download: GEO (CSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4735nnn/GSM4735367/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX8983873
+Sample		Accession: GSM4735367	ID: 304735367
+
+59. Patient #2t-scRNA
+Organism:	Homo sapiens
+Source name:	ccRCC tumor tissue
+Platform: GPL24676 Series: GSE156632 
+FTP download: GEO (CSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4735nnn/GSM4735366/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX8983872
+Sample		Accession: GSM4735366	ID: 304735366
+
+60. Patient #1n-scRNA
+Organism:	Homo sapiens
+Source name:	ccRCC para-tumor tissue
+Platform: GPL24676 Series: GSE156632 
+FTP download: GEO (CSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4735nnn/GSM4735365/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX8983871
+Sample		Accession: GSM4735365	ID: 304735365
+
+61. Patient #1t-scRNA
+Organism:	Homo sapiens
+Source name:	ccRCC tumor tissue
+Platform: GPL24676 Series: GSE156632 
+FTP download: GEO (CSV) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM4735nnn/GSM4735364/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX8983870
+Sample		Accession: GSM4735364	ID: 304735364
+
+62. Pt_mRCC_SC_93
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_36
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887352/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253788
+Sample		Accession: GSM1887352	ID: 301887352
+
+63. Pt_mRCC_SC_92
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_35
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887351/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253787
+Sample		Accession: GSM1887351	ID: 301887351
+
+64. Pt_mRCC_SC_90
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_34
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887350/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253786
+Sample		Accession: GSM1887350	ID: 301887350
+
+65. Pt_mRCC_SC_88
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_33
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887349/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253785
+Sample		Accession: GSM1887349	ID: 301887349
+
+66. Pt_mRCC_SC_87
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_32
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887348/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253784
+Sample		Accession: GSM1887348	ID: 301887348
+
+67. Pt_mRCC_SC_86
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_31
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887347/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253783
+Sample		Accession: GSM1887347	ID: 301887347
+
+68. Pt_mRCC_SC_85
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_30
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887346/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253782
+Sample		Accession: GSM1887346	ID: 301887346
+
+69. Pt_mRCC_SC_84
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_29
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887345/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253781
+Sample		Accession: GSM1887345	ID: 301887345
+
+70. Pt_mRCC_SC_81
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_28
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887344/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253780
+Sample		Accession: GSM1887344	ID: 301887344
+
+71. Pt_mRCC_SC_79
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_27
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887343/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253779
+Sample		Accession: GSM1887343	ID: 301887343
+
+72. Pt_mRCC_SC_75
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_26
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887342/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253778
+Sample		Accession: GSM1887342	ID: 301887342
+
+73. Pt_mRCC_SC_71
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_25
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887341/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253777
+Sample		Accession: GSM1887341	ID: 301887341
+
+74. Pt_mRCC_SC_69
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_24
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887340/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253776
+Sample		Accession: GSM1887340	ID: 301887340
+
+75. Pt_mRCC_SC_64
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_23
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887339/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253775
+Sample		Accession: GSM1887339	ID: 301887339
+
+76. Pt_mRCC_SC_61
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_22
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887338/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253774
+Sample		Accession: GSM1887338	ID: 301887338
+
+77. Pt_mRCC_SC_59
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_21
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887337/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253773
+Sample		Accession: GSM1887337	ID: 301887337
+
+78. Pt_mRCC_SC_58
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_20
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887336/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253772
+Sample		Accession: GSM1887336	ID: 301887336
+
+79. Pt_mRCC_SC_57
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_19
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887335/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253771
+Sample		Accession: GSM1887335	ID: 301887335
+
+80. Pt_mRCC_SC_56
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_18
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887334/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253770
+Sample		Accession: GSM1887334	ID: 301887334
+
+81. Pt_mRCC_SC_53
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_17
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887333/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253769
+Sample		Accession: GSM1887333	ID: 301887333
+
+82. Pt_mRCC_SC_43
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_16
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887332/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253768
+Sample		Accession: GSM1887332	ID: 301887332
+
+83. Pt_mRCC_SC_39
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_15
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887331/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253767
+Sample		Accession: GSM1887331	ID: 301887331
+
+84. Pt_mRCC_SC_36
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_14
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887330/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253766
+Sample		Accession: GSM1887330	ID: 301887330
+
+85. Pt_mRCC_SC_33
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_13
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887329/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253765
+Sample		Accession: GSM1887329	ID: 301887329
+
+86. Pt_mRCC_SC_30
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_12
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887327/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253764
+Sample		Accession: GSM1887327	ID: 301887327
+
+87. Pt_mRCC_SC_24
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_11
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887325/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253763
+Sample		Accession: GSM1887325	ID: 301887325
+
+88. Pt_mRCC_SC_23
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_10
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887323/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253762
+Sample		Accession: GSM1887323	ID: 301887323
+
+89. Pt_mRCC_SC_21
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_9
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887321/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253761
+Sample		Accession: GSM1887321	ID: 301887321
+
+90. Pt_mRCC_SC_17
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_8
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887318/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253760
+Sample		Accession: GSM1887318	ID: 301887318
+
+91. Pt_mRCC_SC_12
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_7
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887316/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253759
+Sample		Accession: GSM1887316	ID: 301887316
+
+92. Pt_mRCC_SC_11
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_6
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887315/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253758
+Sample		Accession: GSM1887315	ID: 301887315
+
+93. Pt_mRCC_SC_10
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_5
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887312/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253757
+Sample		Accession: GSM1887312	ID: 301887312
+
+94. Pt_mRCC_SC_05
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_4
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887310/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253756
+Sample		Accession: GSM1887310	ID: 301887310
+
+95. Pt_mRCC_SC_03
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_3
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887308/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253755
+Sample		Accession: GSM1887308	ID: 301887308
+
+96. Pt_mRCC_SC_01
+Organism:	Homo sapiens
+Source name:	patient, metastatic RCC_2
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887306/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253754
+Sample		Accession: GSM1887306	ID: 301887306
+
+97. PDX_pRCC_SC_94
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_48
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887301/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253752
+Sample		Accession: GSM1887301	ID: 301887301
+
+98. PDX_pRCC_SC_93
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_47
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887299/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253751
+Sample		Accession: GSM1887299	ID: 301887299
+
+99. PDX_pRCC_SC_91
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_46
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887297/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253750
+Sample		Accession: GSM1887297	ID: 301887297
+
+100. PDX_pRCC_SC_90
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_45
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887296/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253749
+Sample		Accession: GSM1887296	ID: 301887296
+
+101. PDX_pRCC_SC_89
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_44
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887295/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253748
+Sample		Accession: GSM1887295	ID: 301887295
+
+102. PDX_pRCC_SC_88
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_43
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887294/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253747
+Sample		Accession: GSM1887294	ID: 301887294
+
+103. PDX_pRCC_SC_87
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_42
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887293/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253746
+Sample		Accession: GSM1887293	ID: 301887293
+
+104. PDX_pRCC_SC_84
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_41
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887292/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253745
+Sample		Accession: GSM1887292	ID: 301887292
+
+105. PDX_pRCC_SC_79
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_40
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887291/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253744
+Sample		Accession: GSM1887291	ID: 301887291
+
+106. PDX_pRCC_SC_78
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_39
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887290/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253743
+Sample		Accession: GSM1887290	ID: 301887290
+
+107. PDX_pRCC_SC_75
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_38
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887289/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253742
+Sample		Accession: GSM1887289	ID: 301887289
+
+108. PDX_pRCC_SC_73
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_37
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887288/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253741
+Sample		Accession: GSM1887288	ID: 301887288
+
+109. PDX_pRCC_SC_72
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_36
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887287/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253740
+Sample		Accession: GSM1887287	ID: 301887287
+
+110. PDX_pRCC_SC_70
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_35
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887286/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253739
+Sample		Accession: GSM1887286	ID: 301887286
+
+111. PDX_pRCC_SC_68
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_34
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887285/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253738
+Sample		Accession: GSM1887285	ID: 301887285
+
+112. PDX_pRCC_SC_67
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_33
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887284/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253737
+Sample		Accession: GSM1887284	ID: 301887284
+
+113. PDX_pRCC_SC_66
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_32
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887283/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253736
+Sample		Accession: GSM1887283	ID: 301887283
+
+114. PDX_pRCC_SC_65
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_31
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887282/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253735
+Sample		Accession: GSM1887282	ID: 301887282
+
+115. PDX_pRCC_SC_62
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_30
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887281/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253734
+Sample		Accession: GSM1887281	ID: 301887281
+
+116. PDX_pRCC_SC_61
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_29
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887280/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253733
+Sample		Accession: GSM1887280	ID: 301887280
+
+117. PDX_pRCC_SC_60
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_28
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887279/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253732
+Sample		Accession: GSM1887279	ID: 301887279
+
+118. PDX_pRCC_SC_59
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_27
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887278/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253731
+Sample		Accession: GSM1887278	ID: 301887278
+
+119. PDX_pRCC_SC_58
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_26
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887277/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253730
+Sample		Accession: GSM1887277	ID: 301887277
+
+120. PDX_pRCC_SC_57
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_25
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887276/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253729
+Sample		Accession: GSM1887276	ID: 301887276
+
+121. PDX_pRCC_SC_56
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_24
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887275/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253728
+Sample		Accession: GSM1887275	ID: 301887275
+
+122. PDX_pRCC_SC_55
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_23
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887274/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253727
+Sample		Accession: GSM1887274	ID: 301887274
+
+123. PDX_pRCC_SC_53
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_22
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887273/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253726
+Sample		Accession: GSM1887273	ID: 301887273
+
+124. PDX_pRCC_SC_52
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_21
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887272/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253725
+Sample		Accession: GSM1887272	ID: 301887272
+
+125. PDX_pRCC_SC_51
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_20
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887271/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253724
+Sample		Accession: GSM1887271	ID: 301887271
+
+126. PDX_pRCC_SC_50
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_19
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887270/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253723
+Sample		Accession: GSM1887270	ID: 301887270
+
+127. PDX_pRCC_SC_49
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_18
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887269/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253722
+Sample		Accession: GSM1887269	ID: 301887269
+
+128. PDX_pRCC_SC_46
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_17
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887268/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253721
+Sample		Accession: GSM1887268	ID: 301887268
+
+129. PDX_pRCC_SC_37
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_16
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887267/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253720
+Sample		Accession: GSM1887267	ID: 301887267
+
+130. PDX_pRCC_SC_36
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_15
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887266/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253719
+Sample		Accession: GSM1887266	ID: 301887266
+
+131. PDX_pRCC_SC_35
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_14
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887265/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253718
+Sample		Accession: GSM1887265	ID: 301887265
+
+132. PDX_pRCC_SC_34
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_13
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887264/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253717
+Sample		Accession: GSM1887264	ID: 301887264
+
+133. PDX_pRCC_SC_29
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_12
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887263/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253716
+Sample		Accession: GSM1887263	ID: 301887263
+
+134. PDX_pRCC_SC_28
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_11
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887262/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253715
+Sample		Accession: GSM1887262	ID: 301887262
+
+135. PDX_pRCC_SC_27
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_10
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887261/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253714
+Sample		Accession: GSM1887261	ID: 301887261
+
+136. PDX_pRCC_SC_24
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_9
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887260/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253713
+Sample		Accession: GSM1887260	ID: 301887260
+
+137. PDX_pRCC_SC_16
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_8
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887259/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253712
+Sample		Accession: GSM1887259	ID: 301887259
+
+138. PDX_pRCC_SC_14
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_7
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887258/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253711
+Sample		Accession: GSM1887258	ID: 301887258
+
+139. PDX_pRCC_SC_13
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_6
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887257/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253710
+Sample		Accession: GSM1887257	ID: 301887257
+
+140. PDX_pRCC_SC_10
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_5
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887256/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253709
+Sample		Accession: GSM1887256	ID: 301887256
+
+141. PDX_pRCC_SC_06
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_4
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887255/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253708
+Sample		Accession: GSM1887255	ID: 301887255
+
+142. PDX_pRCC_SC_05
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_3
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887254/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253707
+Sample		Accession: GSM1887254	ID: 301887254
+
+143. PDX_pRCC_SC_03
+Organism:	Homo sapiens
+Source name:	PDX, primary RCC_2
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887253/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253706
+Sample		Accession: GSM1887253	ID: 301887253
+
+144. PDX_mRCC_SC_95
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_37
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887251/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253704
+Sample		Accession: GSM1887251	ID: 301887251
+
+145. PDX_mRCC_SC_94
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_36
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887250/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253703
+Sample		Accession: GSM1887250	ID: 301887250
+
+146. PDX_mRCC_SC_93
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_35
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887249/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253702
+Sample		Accession: GSM1887249	ID: 301887249
+
+147. PDX_mRCC_SC_92
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_34
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887248/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253701
+Sample		Accession: GSM1887248	ID: 301887248
+
+148. PDX_mRCC_SC_90
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_33
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887247/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253700
+Sample		Accession: GSM1887247	ID: 301887247
+
+149. PDX_mRCC_SC_89
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_32
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887246/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253699
+Sample		Accession: GSM1887246	ID: 301887246
+
+150. PDX_mRCC_SC_88
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_31
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887245/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253698
+Sample		Accession: GSM1887245	ID: 301887245
+
+151. PDX_mRCC_SC_87
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_30
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887244/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253697
+Sample		Accession: GSM1887244	ID: 301887244
+
+152. PDX_mRCC_SC_86
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_29
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887243/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253696
+Sample		Accession: GSM1887243	ID: 301887243
+
+153. PDX_mRCC_SC_81
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_28
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887242/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253695
+Sample		Accession: GSM1887242	ID: 301887242
+
+154. PDX_mRCC_SC_80
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_27
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887241/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253694
+Sample		Accession: GSM1887241	ID: 301887241
+
+155. PDX_mRCC_SC_79
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_26
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887240/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253693
+Sample		Accession: GSM1887240	ID: 301887240
+
+156. PDX_mRCC_SC_77
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_25
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887239/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253692
+Sample		Accession: GSM1887239	ID: 301887239
+
+157. PDX_mRCC_SC_70
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_24
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887238/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253691
+Sample		Accession: GSM1887238	ID: 301887238
+
+158. PDX_mRCC_SC_69
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_23
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887237/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253690
+Sample		Accession: GSM1887237	ID: 301887237
+
+159. PDX_mRCC_SC_68
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_22
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887236/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253689
+Sample		Accession: GSM1887236	ID: 301887236
+
+160. PDX_mRCC_SC_64
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_21
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887235/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253688
+Sample		Accession: GSM1887235	ID: 301887235
+
+161. PDX_mRCC_SC_63
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_20
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887234/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253687
+Sample		Accession: GSM1887234	ID: 301887234
+
+162. PDX_mRCC_SC_61
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_19
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887233/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253686
+Sample		Accession: GSM1887233	ID: 301887233
+
+163. PDX_mRCC_SC_60
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_18
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887232/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253685
+Sample		Accession: GSM1887232	ID: 301887232
+
+164. PDX_mRCC_SC_56
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_17
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887231/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253684
+Sample		Accession: GSM1887231	ID: 301887231
+
+165. PDX_mRCC_SC_52
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_16
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887230/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253683
+Sample		Accession: GSM1887230	ID: 301887230
+
+166. PDX_mRCC_SC_44
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_15
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887229/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253682
+Sample		Accession: GSM1887229	ID: 301887229
+
+167. PDX_mRCC_SC_41
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_14
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887228/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253681
+Sample		Accession: GSM1887228	ID: 301887228
+
+168. PDX_mRCC_SC_34
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_13
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887227/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253680
+Sample		Accession: GSM1887227	ID: 301887227
+
+169. PDX_mRCC_SC_21
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_12
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887226/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253679
+Sample		Accession: GSM1887226	ID: 301887226
+
+170. PDX_mRCC_SC_20
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_11
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887225/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253678
+Sample		Accession: GSM1887225	ID: 301887225
+
+171. PDX_mRCC_SC_15
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_10
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887224/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253677
+Sample		Accession: GSM1887224	ID: 301887224
+
+172. PDX_mRCC_SC_14
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_9
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887223/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253676
+Sample		Accession: GSM1887223	ID: 301887223
+
+173. PDX_mRCC_SC_12
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_8
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887222/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253675
+Sample		Accession: GSM1887222	ID: 301887222
+
+174. PDX_mRCC_SC_08
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_7
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887221/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253674
+Sample		Accession: GSM1887221	ID: 301887221
+
+175. PDX_mRCC_SC_06
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_6
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887220/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253673
+Sample		Accession: GSM1887220	ID: 301887220
+
+176. PDX_mRCC_SC_05
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_5
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887219/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253672
+Sample		Accession: GSM1887219	ID: 301887219
+
+177. PDX_mRCC_SC_04
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_4
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887218/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253671
+Sample		Accession: GSM1887218	ID: 301887218
+
+178. PDX_mRCC_SC_03
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_3
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887217/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253670
+Sample		Accession: GSM1887217	ID: 301887217
+
+179. PDX_mRCC_SC_01
+Organism:	Homo sapiens
+Source name:	PDX, metastatic RCC_2
+Platform: GPL16791 Series: GSE73121 GSE73122 
+FTP download: GEO (TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1887nnn/GSM1887216/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRX1253669
+Sample		Accession: GSM1887216	ID: 301887216
