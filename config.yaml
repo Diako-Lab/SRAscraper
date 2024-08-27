@@ -1,0 +1,6 @@
+computing_threads: 1
+nodes: 1
+output_dir: /master/jlehle/OmniScrape/tmp
+target_files:
+- outs/sc_counts.csv
+temp_dir: /tmp/

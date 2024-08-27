@@ -1,0 +1,4 @@
+target_files: [
+  'outs/sc_counts.csv'
+]
+temp_dir: '/tmp/'
