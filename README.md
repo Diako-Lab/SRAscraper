@@ -1,8 +1,6 @@
-<p align="center">
-    <img height="150" src="https://uni-muenster.sciebo.de/s/I0dmJFFdq4UUYmk/download">
-</p>
+`SRAscraper` (Pipeline for downloading datasets from SRA and GEO databases) currently focused on scRNA-seq datasets. First time using `SRAscraper`? We recommend having a look at our [step-by-step guide](https://github.com/MarWoes/wg-blimp/wiki/Tutorial).
 
-`wg-blimp` (Whole Genome BisuLfIte sequencing Methylation analysis Pipeline) can be utilised to analyse WGBS data. It performs alignment, qc, methylation calling, DMR calling, segmentation and annotation using a multitude of tools. First time using `wg-blimp`? We recommend having a look at our [step-by-step guide](https://github.com/MarWoes/wg-blimp/wiki/Tutorial).
+#*** WORKING
 
 ## Requirements
 To run `wg-blimp` you need a UNIX environment that contains a [Bioconda](http://bioconda.github.io/) setup.
