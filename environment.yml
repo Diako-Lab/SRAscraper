@@ -1,4 +1,4 @@
-name: OmniScrape
+name: SRAscraper
 channels:
   - conda-forge
   - bioconda
@@ -12,4 +12,8 @@ dependencies:
   - firefox
   - geoparse
   - cython
-  - wget-python
+  - python-wget
+  - gxx_linux-64
+  - pytest
+  - hypothesis
+  - datrie

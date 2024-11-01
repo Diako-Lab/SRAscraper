@@ -1,4 +1,4 @@
 target_files: [
-  'outs/sc_counts.csv'
+  'outs/ftp_counts.csv'
 ]
 temp_dir: '/tmp/'
