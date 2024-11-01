@@ -5,6 +5,7 @@ import os, sys
 
 os.chdir(output_dir)
 
+
 #%% Import in the dictionary with the metadata
 import pickle
 
@@ -20,12 +21,15 @@ for key in gse_dict.keys():
     for accession in gse_dict[key]['SRR']:
         print(f"\nProcessing sample {accession} from the BioProject {key}")
         subprocess_1 = subprocess.Popen(
+
             ["parallel-fastq-dump", "--sra-id", accession, "--threads", computing_threads, "--outdir", 
              output_dir + '/fastq/'+key+'/'+accession, "--split-spot", "--split-files", "--gzip"], stdout=subprocess.PIPE, text=True)
+
         output, error = subprocess_1.communicate()
         print(f'Outputs: {output}')
         print(f'Errors: {error}')
         print(f"\nRenamming {accession} fastqs")
+
         try:
             os.rename(output_dir + '/fastq/' + key + '/' + accession + '/' + accession + '_1.fastq.gz',
                     output_dir + '/fastq/' + key + '/' + accession + '/' + accession + '_S1_L001_R1_001.fastq.gz')
@@ -35,6 +39,7 @@ for key in gse_dict.keys():
             print("File not found.")
         except OSError as e:
             print("Error renaming file:", e)
+
 
 
 #%% End file
