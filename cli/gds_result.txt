@@ -1,0 +1,8 @@
+
+1. Cytotoxic Innate Lymphoid Cells Sense Cancer Cell-Expressed Interleukin-15 to Suppress Human and Murine Malignancies
+(Submitter supplied) Malignancy can be suppressed by the immune system. However, the classes of immunosurveillance responses and their mode of tumor sensing remain incompletely understood. Here, we show that while clear cell renal cell carcinoma (ccRCC) was infiltrated by exhaustion-phenotype CD8+ T cells which negatively correlated with patient prognosis, chromophobe RCC had abundant infiltration of granzyme A-expressing intraepithelial type 1 innate lymphoid cells (ILC1s) that positively associated with patient survival. more...
+Organism:	Homo sapiens
+Type:		Expression profiling by high throughput sequencing
+Platform: GPL24676 1 Sample
+FTP download: GEO (RDS, TSV, TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE199nnn/GSE199798/
+Series		Accession: GSE199798	ID: 200199798

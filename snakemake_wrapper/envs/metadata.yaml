@@ -2,4 +2,7 @@ channels:
  - conda-forge
  - bioconda
 dependencies:
- - bwameth
+ - python
+ - pandas
+ - python-wget
+ - geoparse

@@ -13,3 +13,7 @@ dependencies:
   - geoparse
   - cython
   - python-wget
+  - gxx_linux-64
+  - pytest
+  - hypothesis
+  - datrie

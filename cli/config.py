@@ -1,28 +1,25 @@
-import os
+import os, io
 import requests
-from ruamel.yaml import YAML
+import yaml
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
 DEFAULT_OPTIONALS_FILE = os.path.join(script_dir, 'optionals.yaml')
 
-yaml = YAML(typ='safe')
-yaml.default_flow_style = False
-
 def get_default_optional_parameters():
 
-    with open(DEFAULT_OPTIONALS_FILE) as f:
+    with open(DEFAULT_OPTIONALS_FILE, 'r') as f:
 
-        default_optionals = yaml.load(f)
+        default_optionals = yaml.safe_load(f)
 
         return default_optionals
 
-def get_default_config(genome_build, cores_per_job, nodes, output_dir):
+def get_default_config(cores, output_dir):
 
     mandatory_parameters = {
+	    'NCBI_search_txt': os.path.join(script_dir, 'gds_result.txt'),
         'output_dir': os.path.abspath(output_dir),
-        'computing_threads': cores_per_job,
-        'nodes': nodes
+        'computing_threads': cores
     }
 
     optional_parameters = get_default_optional_parameters()
@@ -35,13 +32,13 @@ def get_default_config(genome_build, cores_per_job, nodes, output_dir):
 
 def dump_config(config_dict, target_file):
 
-    with (open(target_file, 'w')) as f:
+    with (io.open(target_file, 'w', encoding='utf8')) as f:
 
-        yaml.dump(config_dict, f)
+        yaml.dump(config_dict, f, default_flow_style=False, allow_unicode=True)
 
 
-def create_config(genome_build, cores_per_job, nodes, output_dir, target_yaml):
+def create_config(cores, output_dir, target_yaml):
 
-    config_yaml = get_default_config(genome_build, cores_per_job, nodes, output_dir)
+    config_yaml = get_default_config(cores, output_dir)
 
     dump_config(config_yaml, target_yaml)

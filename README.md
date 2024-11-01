@@ -1,59 +1,37 @@
-`SRAscraper` (Pipeline for downloading datasets from SRA and GEO databases) currently focused on scRNA-seq datasets. First time using `SRAscraper`? We recommend having a look at our [step-by-step guide](https://github.com/MarWoes/wg-blimp/wiki/Tutorial).
+`SRAscraper` (Pipeline for downloading datasets from SRA and GEO databases) First time using `SRAscraper`? We recommend having a look at our [step-by-step guide](https://github.com/MarWoes/wg-blimp/wiki/Tutorial).
 
 #*** WORKING
 
 ## Requirements
-To run `wg-blimp` you need a UNIX environment that contains a [Bioconda](http://bioconda.github.io/) setup.
+To run `SRAscraper` you need a UNIX environment that contains a [Bioconda](http://bioconda.github.io/) setup.
 
 ## Installation
 
-### Bioconda
-It is advised to install `wg-blimp` through Bioconda. It is **strongly** recommended to install `wg-blimp` in a fresh environment, as it has many dependencies that may conflict with other packages, for this you can use:
-
+### Conda environment
+First set up a conda environment that will install all the required software needed to run the SRAscraper pipeline. The conda environment can be made from the environment.yaml file included in the github repo after it has been cloned to your local machine.
 ```
-conda create -n wg-blimp wg-blimp r-base==4.1.1
-```
+conda env create -f environment.yaml
 
-***WARNING***: You need to install `mamba` as well if you intend to use `wg-blimp`'s cluster mode (e.g. on SLURM clusters) using the following command:
-
-```
-conda create -n wg-blimp wg-blimp r-base==4.1.1 mamba
+conda activate SRAscraper
 ```
 
-However, this will install `mamba` and `conda` as a dependency, so make sure to not install `wg-blimp` in an environment that is used for other purposes, and always run `conda deactivate` after running `wg-blimp`.
-Otherwise you might accidentally use the `conda` version installed along `mamba` instead of your own.
-
-
-### From source
-You can also install `wg-blimp` from source using
+###  Install SRAscraper binary
+You can install `SRAscraper` from the setup.py into the conda environment by now running the following command in the cloned github repository.
 ```
-python setup.py install
-```
-Using this installation method requires you to make sure all external tools are installed (such as bwa-meth).
-
-## Running wg-blimp
-
-### WGBS pipeline
-
-`wg-blimp` is a cli wrapper for the WGBS pipeline implemented using [Snakemake](http://snakemake.readthedocs.io/). In general, a pipeline config is fed to the Snakemake workflow and the corresponding tools are called. However, `wg-blimp` also provides some commands to ease creation of config files, or working without config files altogether.
-
-The command `wg-blimp run-snakemake` will run the pipeline with its default parameters. Make sure to set the `--cores` and `--genome-build` options appropriately. This command will also internally create a `config.yaml` file containing all parameters used for the analysis.
-
-However, in case the default configurations are not sufficient, users can provide their own configurations. The commands `wg-blimp create-config` and `wg-blimp run-snakemake-from-config` can be used for this purpose.
-
-`wg-blimp` will attempt to match .fastq files to sample names by searching for sample names in .fastq file names. By default Illumina naming conventions are expected, e.g. for a samples _test1_ the .fastq files should be named as follows:
-```
-test1_L001_R1_001.fastq.gz
-test1_L001_R1_002.fastq.gz
-test1_L001_R2_001.fastq.gz
-test1_L001_R2_002.fastq.gz
-test1_L002_R1_001.fastq.gz
-test1_L002_R1_002.fastq.gz
-test1_L002_R2_001.fastq.gz
-test1_L002_R2_002.fastq.gz
+pip install .
 ```
 
-If names derive from this pattern, users can adjust the regular expression to match in the config file's `rawsuffixregex` entry.
+## Running SRAscraper
+
+### SRAscraper pipeline
+
+`SRAscraper` is a cli wrapper for the SRAscraper pipeline implemented using [Snakemake](http://snakemake.readthedocs.io/). In general, a pipeline config is fed to the Snakemake workflow and the corresponding tools are called. However, `wg-blimp` also provides some commands to ease creation of config files, or working without config files altogether.
+
+The command `SRAscraper create-config . config.yaml` is the first step in the pipeline and will generate the `config.yaml` containing all the parameters which will be used to run the pipeline and can be modified easily.
+
+********
+Start here
+*******
 
 The folder structure created by `wg-blimp run-snakemake` will look as follows:
 
@@ -76,21 +54,6 @@ sample1,/my/path/sample1_L2_1.fq.gz,/my/path/sample1_L2_2.fq.gz
 sample2,/my/path/sample2_L1_1.fq.gz,/my/path/sample2_L1_2.fq.gz
 sample3,/my/path/sample3_L1_1.fq.gz,/my/path/sample3_L1_2.fq.gz
 ```
-
-### Cluster mode
-
-You can use `wg-blimp` on HPC infrastructure using Snakemake's cluster mode by setting the options `--cluster` and `--nodes`.
-The command specified by `--cluster` will be used for rule execution by Snakemake
-Please note that cluster usage strongly depends on local infrastructure and operating systems, thus requiring users to determine adequate parameters for cluster mode.
-An example of `wg-blimp` within a SLURM environment could look as follows:
-
-```
-wg-blimp run-snakemake-from-config --cores 32 --nodes 2 --cluster "sbatch --partition normal --nodes=1 --ntasks-per-node 32 --time 01:00:00" config.yaml
-```
-
-### Shiny GUI
-
-You can use the command `wg-blimp run-shiny` to load one or more project config files into a shiny GUI for easier access.
 
 ## Example
 
@@ -139,8 +102,7 @@ The following entries are used for running the Snakemake pipeline and may be spe
 | *temp_dir* | Directory for temporary files. This option may be used for instances where computation node disk space is limited. |
 
 ## Reporting errors / Requesting features
-If anything goes wrong using `wg-blimp` or any features are missing, feel free to open an issue or to contact Marius Wöste ( mar.w@wwu.de )
+If anything goes wrong using `SRAscraper` or any features are missing, feel free to open an issue on this github repo.
 
 ## Citing
-Please make sure to cite the [BMC software article](https://doi.org/10.1186/s12859-020-3470-5) when using wg-blimp for research purposes:
-> Wöste, M., Leitão, E., Laurentino, S. et al. wg-blimp: an end-to-end analysis pipeline for whole genome bisulfite sequencing data. BMC Bioinformatics 21, 169 (2020). https://doi.org/10.1186/s12859-020-3470-5
+Please make sure to cite the [github repository](https://github.com/Diako-Lab/SRAscraper) when using SRAscraper for research purposes.
