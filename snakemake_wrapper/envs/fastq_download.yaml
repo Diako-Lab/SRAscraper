@@ -3,4 +3,5 @@ channels:
  - bioconda
 dependencies:
  - python
+ - snakemake
  - parallel-fastq-dump

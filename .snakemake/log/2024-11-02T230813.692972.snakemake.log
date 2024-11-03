@@ -1,0 +1,37 @@
+Building DAG of jobs...
+Your conda installation is not configured to use strict channel priorities. This is however crucial for having robust and correct environments (for details, see https://conda-forge.org/docs/user/tipsandtricks.html). Please consider to configure strict priorities by executing 'conda config --set channel_priority strict'.
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job              count
+-------------  -------
+find_metadata        1
+total                1
+
+Select jobs to execute...
+
+[Sat Nov  2 23:08:16 2024]
+rule find_metadata:
+    output: /master/jlehle/github/SRAscraper/results/dictionary_file.txt
+    log: /master/jlehle/github/SRAscraper/results/logs/find_metadata.log
+    jobid: 0
+    reason: Missing output files: /master/jlehle/github/SRAscraper/results/dictionary_file.txt
+    priority: 2
+    resources: tmpdir=/tmp
+
+python snakemake_wrapper/scripts/metadata.py
+Activating conda environment: ../../anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/conda/638e2d69f73c90babea147a704479ad5_
+[Sat Nov  2 23:08:17 2024]
+Error in rule find_metadata:
+    jobid: 0
+    output: /master/jlehle/github/SRAscraper/results/dictionary_file.txt
+    log: /master/jlehle/github/SRAscraper/results/logs/find_metadata.log (check log file(s) for error details)
+    conda-env: /master/jlehle/anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/conda/638e2d69f73c90babea147a704479ad5_
+    shell:
+        python snakemake_wrapper/scripts/metadata.py
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-11-02T230813.692972.snakemake.log
