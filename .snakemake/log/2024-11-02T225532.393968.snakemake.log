@@ -1,0 +1,2 @@
+SyntaxError in file /master/jlehle/anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/Snakefile, line 47:
+Command must be given as string after the shell keyword. (Snakefile, line 47)

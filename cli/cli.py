@@ -3,6 +3,8 @@ import cli.config
 import cli.snakemake
 from os import cpu_count
 
+# IMPORTANT NOTE: All click arguments must be in lowercase!
+
 @click.group()
 def main():
     pass
@@ -11,10 +13,11 @@ def main():
 @main.command(help='Create a config YAML file for running the SRAscrape pipeline.')
 @click.option('--cores', type=click.INT, default=cpu_count()/2, help='The number of cores to use per job. Default is set to half the number of available cores.')
 @click.argument('output_dir')
+@click.argument('ncbi_search_txt')
 @click.argument('target_yaml')
-def create_config(cores, output_dir, target_yaml):
+def create_config(cores, output_dir, ncbi_search_txt, target_yaml):
 
-    cli.config.create_config(cores, output_dir, target_yaml)
+    cli.config.create_config(cores, output_dir, ncbi_search_txt, target_yaml)
 
 
 @main.command(help='Run the SRAscraper pipeline using a config file.')

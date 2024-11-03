@@ -21,7 +21,7 @@ temp_dir = config['temp_dir']
 
 rule find_metadata:
     output:
-        first  = output_dir +'/dictionary_file.txt'
+        first  = output_dir +'/dictionary_file.pkl'
     params:
         NCBI_search_txt = config['NCBI_search_txt'],
         computing_threads = config['computing_threads'],
@@ -45,4 +45,3 @@ rule download_files:
         conda_env_dir + '/fastq_download.yaml' 
     script:
         'scripts/fastq_download.py'
-

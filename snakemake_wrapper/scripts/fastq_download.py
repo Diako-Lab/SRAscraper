@@ -3,6 +3,9 @@
 
 import os, sys
 
+output_dir = snakemake.params.output_dir
+computing_threads = snakemake.params.computing_threads
+
 os.chdir(output_dir)
 
 

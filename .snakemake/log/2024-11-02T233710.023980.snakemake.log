@@ -1,0 +1,2 @@
+RuleException in file /master/jlehle/anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/Snakefile, line 46:
+Conda environments are only allowed with shell, script, notebook, or wrapper directives (not with run or template_engine).

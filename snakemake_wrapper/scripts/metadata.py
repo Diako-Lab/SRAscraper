@@ -3,6 +3,9 @@
 
 import os, sys
 
+output_dir = snakemake.params.output_dir
+NCBI_search_txt = snakemake.params.NCBI_search_txt
+computing_threads = snakemake.params.computing_threads
 
 os.chdir(output_dir)
 
