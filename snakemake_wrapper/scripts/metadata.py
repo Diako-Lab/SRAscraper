@@ -16,6 +16,7 @@ pd.options.display.max_colwidth = 10000
 X = pd.read_fwf(NCBI_search_txt, header=None)
 
 
+
 ftp_links = X[X[0].str.startswith('FTP download')]
 ftp_links = ftp_links.reset_index(drop=True)
 ftp_links = ftp_links.loc[0:,0]
@@ -61,6 +62,7 @@ ftp_list_input = ftp_list
 
 # Number of items in the list
 N = len(ftp_list_input)
+
 
 with ThreadPool(computing_threads) as pool:
     chunksize = ceil(len(ftp_list_input) / computing_threads)
@@ -123,11 +125,13 @@ for key in gse_dict.keys():
     num_rows.append(len(gse_dict[key]))
     unique_columns = [*unique_columns, *gse_dict[key].columns]
 
+
 print(f'''From the {countX(results, True)} FTP pages that returned 200 GET 
       statuses for having GEO *.soft files. 
       There are an available {sum(num_rows)} samples that are available for download.''')
 
 # Save the file This would be the stopping point for the first snakemake rule
+
 import pickle
 
 with open('dictionary_file.pkl', 'wb') as pkl_file:
@@ -136,6 +140,7 @@ with open('dictionary_file.pkl', 'wb') as pkl_file:
     
 
 # End file
+
 import sys
 
 sys.exit()
