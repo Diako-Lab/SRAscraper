@@ -30,8 +30,6 @@ pip install .
 The command `SRAscraper create-config . config.yaml` is the first step in the pipeline and will generate the `config.yaml` containing all the parameters which will be used to run the pipeline and can be modified easily.
 
 ********
-Start here
-********
 
 ## Example
 nstallation
