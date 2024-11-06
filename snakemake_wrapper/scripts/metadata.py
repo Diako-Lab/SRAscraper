@@ -3,18 +3,23 @@
 
 import os, sys
 
-output_dir = snakemake.params.output_dir
+metadata_dir = os.path.join(snakemake.params.output_dir, 'metadata')
 NCBI_search_txt = snakemake.params.NCBI_search_txt
 computing_threads = snakemake.params.computing_threads
 
-os.chdir(output_dir)
+isExist = os.path.exists(metadata_dir)
+
+if not isExist:
+    os.mkdir(metadata_dir)
+
+
+os.chdir(metadata_dir)
 
 #%% Srape out the ftp links from the NCBI search results we will use this later
 import pandas as pd
 pd.options.display.max_colwidth = 10000
 # Read in the NCBI search result file
 X = pd.read_fwf(NCBI_search_txt, header=None)
-
 
 
 ftp_links = X[X[0].str.startswith('FTP download')]
@@ -62,7 +67,6 @@ ftp_list_input = ftp_list
 
 # Number of items in the list
 N = len(ftp_list_input)
-
 
 with ThreadPool(computing_threads) as pool:
     chunksize = ceil(len(ftp_list_input) / computing_threads)
@@ -125,13 +129,11 @@ for key in gse_dict.keys():
     num_rows.append(len(gse_dict[key]))
     unique_columns = [*unique_columns, *gse_dict[key].columns]
 
-
 print(f'''From the {countX(results, True)} FTP pages that returned 200 GET 
       statuses for having GEO *.soft files. 
       There are an available {sum(num_rows)} samples that are available for download.''')
 
 # Save the file This would be the stopping point for the first snakemake rule
-
 import pickle
 
 with open('dictionary_file.pkl', 'wb') as pkl_file:
@@ -140,7 +142,6 @@ with open('dictionary_file.pkl', 'wb') as pkl_file:
     
 
 # End file
-
 import sys
 
 sys.exit()

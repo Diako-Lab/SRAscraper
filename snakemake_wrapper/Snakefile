@@ -6,42 +6,45 @@ if len(config) == 0:
 
 snakemake_dir = sys.path[0]
 output_dir = config['output_dir']
+metadata_dir = output_dir + '/metadata'
+qc_dir = output_dir + '/QC'
 conda_env_dir = snakemake_dir + '/envs'
 log_dir = output_dir + '/logs'
-#target_files = [output_dir + '/' + outfile for outfile in config['target_files']]
 temp_dir = config['temp_dir']
 
 ### SRAscraper v0.1.0 NCBI SRA Fastq Sequencing File Downloader
 
 ### COLLECT METADATA
 
-#rule all:
-#    input:
-#    target_files
+rule all:
+    input:
+        qc_dir + '/multiqc_report.html'
 
 rule find_metadata:
     output:
-        first  = output_dir +'/dictionary_file.pkl'
+        first  = metadata_dir + '/dictionary_file.pkl'
     params:
         NCBI_search_txt = config['NCBI_search_txt'],
         computing_threads = config['computing_threads'],
         output_dir = config['output_dir']
     log:
         log_dir + '/find_metadata.log'
-    priority: 2
     conda:
         conda_env_dir + '/metadata.yaml'
     script:
         'scripts/metadata.py'
 
-rule download_files:
+rule download_and_qc_files:
+    input:
+        first = metadata_dir + '/dictionary_file.pkl'
+    output:
+        second = qc_dir + '/multiqc_report.html'
     params:
         computing_threads = config['computing_threads'],
         output_dir = config['output_dir']
     log:
-        log_dir + 'fastq_download.log'
-    priority: 1
+        log_dir + '/fastq_download_and_qc.log'
     conda:
-        conda_env_dir + '/fastq_download.yaml' 
+        conda_env_dir + '/fastq_download_and_qc.yaml' 
     script:
-        'scripts/fastq_download.py'
+        'scripts/fastq_download_and_qc.py'

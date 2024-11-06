@@ -8,8 +8,7 @@ snakefile_location = os.path.join(script_dir,'..','snakemake_wrapper', 'Snakefil
 conda_prefix = os.path.abspath(os.path.join(script_dir, '..', 'snakemake_wrapper', 'conda'))
 
 
-
-def run_from_config(dry_run, config_yaml):
+def run_config(dry_run, config_yaml):
 
     print("[INFO] Invoking Snakemake with config {}".format(config_yaml))
 
