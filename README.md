@@ -1,4 +1,4 @@
-`SRAscraper` (Pipeline for downloading datasets from SRA and GEO databases) First time using `SRAscraper`? We recommend having a look at our [step-by-step guide](https://github.com/MarWoes/wg-blimp/wiki/Tutorial).
+`SRAscraper` (Pipeline for downloading fastq sequencing datasets from the NIH/NCBI sequencing read archive (SRA) database)
 
 #*** WORKING
 
@@ -8,8 +8,10 @@ To run `SRAscraper` you need a UNIX environment that contains a [Bioconda](http:
 ## Installation
 
 ### Conda environment
-First set up a conda environment that will install all the required software needed to run the SRAscraper pipeline. The conda environment can be made from the environment.yaml file included in the github repo after it has been cloned to your local machine.
+First, clone the SRAscraper github repo to your local machine and then set up a conda environment that will install all the required software needed to run the SRAscraper pipeline. The conda environment can be made from the environment.yaml file included in the github repo after it has been cloned to your local machine.
 ```
+git clone https://github.com/Diako-Lab/SRAscraper.git && cd SRAscraper
+
 conda env create -f environment.yaml
 
 conda activate SRAscraper
@@ -25,81 +27,46 @@ pip install .
 
 ### SRAscraper pipeline
 
-`SRAscraper` is a cli wrapper for the SRAscraper pipeline implemented using [Snakemake](http://snakemake.readthedocs.io/). In general, a pipeline config is fed to the Snakemake workflow and the corresponding tools are called. However, `wg-blimp` also provides some commands to ease creation of config files, or working without config files altogether.
+`SRAscraper` is a cli wrapper for the SRAscraper pipeline implemented using [Snakemake](http://snakemake.readthedocs.io/). The user will provide information about what SRA bioprojects they would like to download fastqs from as well as the location of the output directory where those files will be downloaded to all which is written into a config.yaml file in the first part of the pipeline. Following that initial step, the pipeline config is fed to the Snakemake workflow so that different programs can be chained together to frist download the fastqs and then check the quality of the fastqs producing an ultimate suammary quality control target file.  
 
 The command `SRAscraper create-config . config.yaml` is the first step in the pipeline and will generate the `config.yaml` containing all the parameters which will be used to run the pipeline and can be modified easily.
 
 ********
 Start here
-*******
-
-The folder structure created by `wg-blimp run-snakemake` will look as follows:
-
-* alignment - contains all bam/bai files
-* dmr - contains dmr files by different callers
-* logs - each pipeline step deposits its logs here
-* methylation - methylation bedgraph files
-* qc - multiqc and other qc related files
-* raw - text files describing which fastq files have been used for each sample
-* segmentation - methylome segments (UMRs/LMRs/PMDs) as computed by MethylSeekR
-* config.yaml - configuration file used for the analysis
-
-It is recommended to check the *raw* folder if all samples contain the correct raw fastq source files.
-When in doubt, `wg-blimp` also allows for explicit association of samples and read files by setting `sample_fastq_csv` in the configuration file.
-An example csv file could look as follows (column names must be set to `sample`, `forward` and `reverse`):
-```
-sample,forward,reverse
-sample1,/my/path/sample1_L1_1.fq.gz,/my/path/sample1_L1_2.fq.gz
-sample1,/my/path/sample1_L2_1.fq.gz,/my/path/sample1_L2_2.fq.gz
-sample2,/my/path/sample2_L1_1.fq.gz,/my/path/sample2_L1_2.fq.gz
-sample3,/my/path/sample3_L1_1.fq.gz,/my/path/sample3_L1_2.fq.gz
-```
+********
 
 ## Example
+nstallation
+Below is an example of how to generate a config.yaml by running `SRAscraper create-config` and then supplying the gds_result.txt file provided with the github repo to test installation. 
 
-Some example `.fastq` can be found on [Sciebo](https://uni-muenster.sciebo.de/s/7vpqRSEATYcvlnP). You can use the command
 ```
-wg-blimp run-snakemake fastq/ chr22.fasta blood1,blood2 sperm1,sperm2 results --cores=8 --aligner=gembs
+SRAscraper create-config results cli/gds_result.txt config.yaml
 ```
 
-Please note that the pipeline commands also allow a `--use-sample-files` option so sample groups can be loaded from text files instead of comma separates files.
+Here is an explanation of each of the inputs:
 
+* results: Name of the output directory where you like the pipeline to produce files.
+* cli/gds_result.txt: NCBI search result file which will list ftp locations where fastq files can be identified and downloaded. More information on how to generate your own custom gds_result.txt described below.
+* config.yaml: Name of config.yaml used for the pipeline. User has control over name of config.yaml file in order to mark and better organize config.yamls if pipeline is run often.
 
-## Config parameters
+The pipeline comes with a test gsd_result.txt located in cli/gds_result.txt to confirm the pipeline is functioning correctly but the user will need to generate their own gsd_file.txt file for future runs.
+This can be accomplished by searching for GEO bioprojects with a gds_sra filter on the [NIH search page](https://www.ncbi.nlm.nih.gov/gds/?term=gds_sra%5Bfilter%5D)
+Once you have modified the search filters and selected all the project that you are interested in produce a summary gds_result.txt file by following the steps displayed below. 
 
-The following entries are used for running the Snakemake pipeline and may be specified in the `config.yaml` files:
+![make_custom_gds_result_example](cli/make_custom_gds_result_example.png)
 
-| Key | Value |
-| --- | ----- |
-| *aligner* | Aligner to be used by pipeline. Choose either gemBS or bwa-meth. |
-| *annotation_allowed_biotypes* | Only genes with this biotype will be annotated in the DMR table (see https://www.gencodegenes.org/pages/biotypes.html ). |
-| *annotation_min_mapq* | When annotating coverage, only use reads with a minimum mapping quality |
-| *bsseq_local_correct* | Use local correction for bsseq DMR calling. Usually, setting this to FALSE will increase the number of calls. |
-| *cgi_annotation_file* | Gzipped csv file used for cg island annotation. Mandatory for MethylSeekR segmentation. Usually downloaded from UCSC Table Browser. |
-| *computing_threads* | Number of processors a single job is allowed to use. Remember to use `--cores` parameter for Snakemake. |
-| *dmr_tools* | Tools to use for DMR calling. Available: `bsseq`, `camel`, `metilene`
-| *group1* | Samples in first group for DMR analysis |
-| *group2* | Samples in second group for DMR analysis |
-| *gtf_annotation_file* | GTF file used for annotation of genes and promoters. |
-| *io_threads* | IO intensive tools virtually reserve this many cores (while actually using only one) to reduce file system IO load. |
-| *java_memory_gb* | Gigabytes of RAM to allocate for Java-based tools. If samples are too large, this must be increased to prevent crashes. |
-| *methylation_rate_on_chromosomes* | Compute methylation rates for these chromosome during QC |
-| *methylseekr_fdr_cutoff* | FDR cutoff for MethylSeekR segmentation. |
-| *methylseekr_methylation_cutoff* | Methylation cutoff for MethylSeekR segmentation. |
-| *methylseekr_pmd_chromosome* | Chromosome to compute MethylSeekR alpha values for. |
-| *min_cov* | Minimum average coverage for methylation calling |
-| *min_cpg* | Minimum number of CpGs in a DMR to be called |
-| *min_diff* | Minimum average difference between the two groups for DMR calling |
-| *output_dir* | Directory containing all files created by the pipeline |
-| *promoter_tss_distances* | Distance interval around TSS's to be recognized as promoters in DMR annotation. |
-| *rawdir* | Directory containing .fastq files |
-| *rawsuffixregex* | The regular expressions to match for paired reads. By default, Illumina naming conventions are accepted. |
-| *ref* | .fasta reference file. "Bisulfited" references and BWA indices will be created automatically by bwa-meth) |
-| *repeat_masker_annotation_file* | File containing repetitive regions. Usually generated by RepeatMasker and downloaded from UCSC Table Browser. |
-| *sample_fastq_csv* | Optional CSV file containing association between samples and read files. The CSV must contain a header with column names `sample`, `forward` and `reverse`. When this option is set, parameters *rawdir* and *rawsuffixregex* are ignored. |
-| *samples* | All samples (usually concatenation of group1 and group2) |
-| *target_files* | Files to be generated by the Snakemake workflow |
-| *temp_dir* | Directory for temporary files. This option may be used for instances where computation node disk space is limited. |
+Once you have generated the `config.yaml` file you can run the pipeline with the following command.
+
+```
+SRAscraper run-config config.yaml
+```
+
+The folder structure created by `SRAscraper run-config` will look as follows:
+
+* metadata - contains dictionary python pickle file with metadata required to find and download fastqs
+* fastq - contains all fastq files broken down by GSE bioproject and then by SRR biosample identifiers
+* QC - multiqc and fastqc files
+* logs - each pipeline step deposits its logs here
 
 ## Reporting errors / Requesting features
 If anything goes wrong using `SRAscraper` or any features are missing, feel free to open an issue on this github repo.

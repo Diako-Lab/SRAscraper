@@ -23,7 +23,7 @@ def create_config(cores, output_dir, ncbi_search_txt, target_yaml):
 @main.command(help='Run the SRAscraper pipeline using a config file.')
 @click.option('--dry-run', is_flag=True, default=False, help='Only dry-run the workflow.')
 @click.argument('config_yaml')
-def run_from_config(dry_run, config_yaml):
+def run_config(dry_run, config_yaml):
 
-    cli.snakemake.run_from_config(dry_run, config_yaml)
+    cli.snakemake.run_config(dry_run, config_yaml)
 

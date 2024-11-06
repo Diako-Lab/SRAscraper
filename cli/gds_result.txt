@@ -1,8 +1,9 @@
 
-1. Cytotoxic Innate Lymphoid Cells Sense Cancer Cell-Expressed Interleukin-15 to Suppress Human and Murine Malignancies
-(Submitter supplied) Malignancy can be suppressed by the immune system. However, the classes of immunosurveillance responses and their mode of tumor sensing remain incompletely understood. Here, we show that while clear cell renal cell carcinoma (ccRCC) was infiltrated by exhaustion-phenotype CD8+ T cells which negatively correlated with patient prognosis, chromophobe RCC had abundant infiltration of granzyme A-expressing intraepithelial type 1 innate lymphoid cells (ILC1s) that positively associated with patient survival. more...
-Organism:	Homo sapiens
+1. Ebf2 is a selective marker of brown and beige adipogenic precursor cells (RNA-seq)
+(Submitter supplied) Brown adipocytes, muscle and dorsal dermis descend from precursor cells in the dermomyotome, but the factors that regulate commitment to the brown adipose lineage are unknown. Here, we prospectively isolated and determined the molecular profile of embryonic brown preadipose cells. Brown adipogenic precursor activity in embryos was confined to Pdgfrα+, Myf5Cre-lineage-marked cells. RNAseq analysis identified Early B Cell Factor-2 (Ebf2) as one of the most selectively expressed genes in this cell fraction. more...
+Organism:	Mus musculus
 Type:		Expression profiling by high throughput sequencing
-Platform: GPL24676 1 Sample
-FTP download: GEO (RDS, TSV, TXT) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE199nnn/GSE199798/
-Series		Accession: GSE199798	ID: 200199798
+Platform: GPL13112 4 Samples
+FTP download: GEO (DIFF) ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE60nnn/GSE60441/
+SRA Run Selector: https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA258274
+Series		Accession: GSE60441	ID: 200060441
