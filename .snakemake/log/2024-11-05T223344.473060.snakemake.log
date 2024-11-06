@@ -1,0 +1,61 @@
+Building DAG of jobs...
+Your conda installation is not configured to use strict channel priorities. This is however crucial for having robust and correct environments (for details, see https://conda-forge.org/docs/user/tipsandtricks.html). Please consider to configure strict priorities by executing 'conda config --set channel_priority strict'.
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                      count
+---------------------  -------
+all                          1
+download_and_qc_files        1
+find_metadata                1
+total                        3
+
+Select jobs to execute...
+
+[Tue Nov  5 22:33:48 2024]
+rule find_metadata:
+    output: /master/jlehle/github/SRAscraper/results/metadata/dictionary_file.pkl
+    log: /master/jlehle/github/SRAscraper/results/logs/find_metadata.log
+    jobid: 2
+    reason: Code has changed since last execution
+    resources: tmpdir=/tmp
+
+python -c "from __future__ import print_function; import sys, json; print(json.dumps([sys.version_info.major, sys.version_info.minor]))"
+Activating conda environment: ../../anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/conda/58cd7fe7ff1bff55b1500a92172903ad_
+python /master/jlehle/github/SRAscraper/.snakemake/scripts/tmp2jdlcwq2.metadata.py
+Activating conda environment: ../../anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/conda/58cd7fe7ff1bff55b1500a92172903ad_
+[Tue Nov  5 22:34:24 2024]
+Finished job 2.
+1 of 3 steps (33%) done
+Select jobs to execute...
+
+[Tue Nov  5 22:34:24 2024]
+rule download_and_qc_files:
+    input: /master/jlehle/github/SRAscraper/results/metadata/dictionary_file.pkl
+    output: /master/jlehle/github/SRAscraper/results/QC/multiqc_report.html
+    log: /master/jlehle/github/SRAscraper/results/logs/fastq_download_and_qc.log
+    jobid: 1
+    reason: Missing output files: /master/jlehle/github/SRAscraper/results/QC/multiqc_report.html; Input files updated by another job: /master/jlehle/github/SRAscraper/results/metadata/dictionary_file.pkl
+    resources: tmpdir=/tmp
+
+python -c "from __future__ import print_function; import sys, json; print(json.dumps([sys.version_info.major, sys.version_info.minor]))"
+Activating conda environment: ../../anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/conda/4e4d91bc91c6e19131a726b4e0cce875_
+python /master/jlehle/github/SRAscraper/.snakemake/scripts/tmpvwsea5p0.fastq_download_and_qc.py
+Activating conda environment: ../../anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/conda/4e4d91bc91c6e19131a726b4e0cce875_
+[Tue Nov  5 23:01:47 2024]
+Finished job 1.
+2 of 3 steps (67%) done
+Select jobs to execute...
+
+[Tue Nov  5 23:01:47 2024]
+localrule all:
+    input: /master/jlehle/github/SRAscraper/results/QC/multiqc_report.html
+    jobid: 0
+    reason: Input files updated by another job: /master/jlehle/github/SRAscraper/results/QC/multiqc_report.html
+    resources: tmpdir=/tmp
+
+[Tue Nov  5 23:01:47 2024]
+Finished job 0.
+3 of 3 steps (100%) done
+Complete log: .snakemake/log/2024-11-05T223344.473060.snakemake.log

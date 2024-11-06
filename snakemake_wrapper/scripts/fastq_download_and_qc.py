@@ -4,11 +4,12 @@
 import os, sys
 
 output_dir = snakemake.params.output_dir
+metadata_dir = os.path.join(snakemake.params.output_dir, 'metadata')
 computing_threads = snakemake.params.computing_threads
 
-os.chdir(output_dir)
+os.chdir(metadata_dir)
 
-#%% Import in the dictionary with the metadata
+# Import in the dictionary with the metadata
 import pickle
 
 with open('dictionary_file.pkl', 'rb') as pkl_file:
@@ -16,15 +17,15 @@ with open('dictionary_file.pkl', 'rb') as pkl_file:
      print('Dictionary loaded successfully')
 
      
-#%% Go get some files
+# Go get some files
 import subprocess
 
 for key in gse_dict.keys():
     for accession in gse_dict[key]['SRR']:
         print(f"\nProcessing sample {accession} from the BioProject {key}")
         subprocess_1 = subprocess.Popen(
-            ["parallel-fastq-dump", "--sra-id", accession, "--threads", computing_threads, "--outdir", 
-             output_dir + '/fastq/'+key+'/'+accession, "--split-spot", "--split-files", "--gzip"], stdout=subprocess.PIPE, text=True)
+            ["parallel-fastq-dump", "--sra-id", accession, "--threads", str(computing_threads), "--outdir", 
+             output_dir+'/fastq/'+key+'/'+accession, "--split-spot", "--split-files", "--gzip"], stdout=subprocess.PIPE, text=True)
         output, error = subprocess_1.communicate()
         print(f'Outputs: {output}')
         print(f'Errors: {error}')
@@ -40,6 +41,27 @@ for key in gse_dict.keys():
             print("Error renaming file:", e)
 
 
-#%% End file
+
+# QC Section
+# Go check some files with fastqc
+
+for key in gse_dict.keys():
+    for accession in gse_dict[key]['SRR']:
+        subprocess_2 = subprocess.Popen(
+            ["fastqc", "-t", str(computing_threads), "-o", os.path.join(output_dir, 'QC'), os.path.join(output_dir, 'fastq', key, accession, accession+'_S1_L001_R1_001.fastq.gz'), os.path.join(output_dir, 'fastq',  key, accession, accession+'_S2_L001_R1_001.fastq.gz')], stdout=subprocess.PIPE, text=True)
+        output, error = subprocess_2.communicate()
+        print(f'Outputs: {output}')
+        print(f'Errors: {error}')
+
+# Pull all the repoorts together with multiqc
+
+subprocess_3 = subprocess.Popen(
+    ["multiqc", "-o", os.path.join(output_dir, 'QC'), os.path.join(output_dir, 'QC')], stdout=subprocess.PIPE, text=True)
+output, error = subprocess_3.communicate()
+print(f'Outputs: {output}')
+print(f'Errors: {error}')
+
+
+# End file
 
 sys.exit()

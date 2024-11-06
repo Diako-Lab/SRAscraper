@@ -1,0 +1,52 @@
+Building DAG of jobs...
+Your conda installation is not configured to use strict channel priorities. This is however crucial for having robust and correct environments (for details, see https://conda-forge.org/docs/user/tipsandtricks.html). Please consider to configure strict priorities by executing 'conda config --set channel_priority strict'.
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                      count
+---------------------  -------
+all                          1
+download_and_qc_files        1
+find_metadata                1
+total                        3
+
+Select jobs to execute...
+
+[Tue Nov  5 20:11:10 2024]
+rule find_metadata:
+    output: /master/jlehle/github/SRAscraper/results/dictionary_file.pkl
+    log: /master/jlehle/github/SRAscraper/results/logs/find_metadata.log
+    jobid: 2
+    reason: Missing output files: /master/jlehle/github/SRAscraper/results/dictionary_file.pkl
+    resources: tmpdir=/tmp
+
+python -c "from __future__ import print_function; import sys, json; print(json.dumps([sys.version_info.major, sys.version_info.minor]))"
+Activating conda environment: ../../anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/conda/58cd7fe7ff1bff55b1500a92172903ad_
+python /master/jlehle/github/SRAscraper/.snakemake/scripts/tmpu1f1bjby.metadata.py
+Activating conda environment: ../../anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/conda/58cd7fe7ff1bff55b1500a92172903ad_
+[Tue Nov  5 20:11:51 2024]
+Finished job 2.
+1 of 3 steps (33%) done
+Select jobs to execute...
+
+[Tue Nov  5 20:11:51 2024]
+rule download_and_qc_files:
+    input: /master/jlehle/github/SRAscraper/results/dictionary_file.pkl
+    output: /master/jlehle/github/SRAscraper/results/QC/multiqc_report.html
+    log: /master/jlehle/github/SRAscraper/results/logsfastq_download_and_qc.log
+    jobid: 1
+    reason: Missing output files: /master/jlehle/github/SRAscraper/results/QC/multiqc_report.html; Input files updated by another job: /master/jlehle/github/SRAscraper/results/dictionary_file.pkl
+    resources: tmpdir=/tmp
+
+python -c "from __future__ import print_function; import sys, json; print(json.dumps([sys.version_info.major, sys.version_info.minor]))"
+Activating conda environment: ../../anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/conda/4e4d91bc91c6e19131a726b4e0cce875_
+python /master/jlehle/github/SRAscraper/.snakemake/scripts/tmpu1qb2lxn.fastq_download_and_qc.py
+Activating conda environment: ../../anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/conda/4e4d91bc91c6e19131a726b4e0cce875_
+Waiting at most 3 seconds for missing files.
+MissingOutputException in rule download_and_qc_files in file /master/jlehle/anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/Snakefile, line 36:
+Job 1  completed successfully, but some output files are missing. Missing files after 3 seconds. This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait:
+/master/jlehle/github/SRAscraper/results/QC/multiqc_report.html
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-11-05T201100.641943.snakemake.log

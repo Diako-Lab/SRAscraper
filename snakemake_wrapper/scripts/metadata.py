@@ -3,11 +3,17 @@
 
 import os, sys
 
-output_dir = snakemake.params.output_dir
+metadata_dir = os.path.join(snakemake.params.output_dir, 'metadata')
 NCBI_search_txt = snakemake.params.NCBI_search_txt
 computing_threads = snakemake.params.computing_threads
 
-os.chdir(output_dir)
+isExist = os.path.exists(metadata_dir)
+
+if not isExist:
+    os.mkdir(metadata_dir)
+
+
+os.chdir(metadata_dir)
 
 #%% Srape out the ftp links from the NCBI search results we will use this later
 import pandas as pd

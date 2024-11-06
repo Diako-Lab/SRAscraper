@@ -17,3 +17,6 @@ dependencies:
   - pytest
   - hypothesis
   - datrie
+  - fastqc
+  - multiqc
+  - libnsl

@@ -1,0 +1,41 @@
+Building DAG of jobs...
+Your conda installation is not configured to use strict channel priorities. This is however crucial for having robust and correct environments (for details, see https://conda-forge.org/docs/user/tipsandtricks.html). Please consider to configure strict priorities by executing 'conda config --set channel_priority strict'.
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                      count
+---------------------  -------
+all                          1
+download_and_qc_files        1
+find_metadata                1
+total                        3
+
+Select jobs to execute...
+
+[Tue Nov  5 22:16:47 2024]
+rule find_metadata:
+    output: /master/jlehle/github/SRAscraper/results/metadata/dictionary_file.pkl
+    log: /master/jlehle/github/SRAscraper/results/logs/find_metadata.log
+    jobid: 2
+    reason: Missing output files: /master/jlehle/github/SRAscraper/results/metadata/dictionary_file.pkl
+    resources: tmpdir=/tmp
+
+python -c "from __future__ import print_function; import sys, json; print(json.dumps([sys.version_info.major, sys.version_info.minor]))"
+Activating conda environment: ../../anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/conda/58cd7fe7ff1bff55b1500a92172903ad_
+python /master/jlehle/github/SRAscraper/.snakemake/scripts/tmp24r0ly2a.metadata.py
+Activating conda environment: ../../anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/conda/58cd7fe7ff1bff55b1500a92172903ad_
+[Tue Nov  5 22:16:48 2024]
+Error in rule find_metadata:
+    jobid: 2
+    output: /master/jlehle/github/SRAscraper/results/metadata/dictionary_file.pkl
+    log: /master/jlehle/github/SRAscraper/results/logs/find_metadata.log (check log file(s) for error details)
+    conda-env: /master/jlehle/anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/conda/58cd7fe7ff1bff55b1500a92172903ad_
+
+RuleException:
+CalledProcessError in file /master/jlehle/anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/Snakefile, line 35:
+Command 'source /master/jlehle/anaconda3/bin/activate '/master/jlehle/anaconda3/envs/SRAscraper/lib/python3.10/site-packages/snakemake_wrapper/conda/58cd7fe7ff1bff55b1500a92172903ad_'; set -euo pipefail;  python /master/jlehle/github/SRAscraper/.snakemake/scripts/tmp24r0ly2a.metadata.py' returned non-zero exit status 1.
+  File "/master/jlehle/anaconda3/envs/SRAscraper/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-11-05T221643.766141.snakemake.log
