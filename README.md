@@ -1,7 +1,5 @@
 `SRAscraper` (Pipeline for downloading fastq sequencing datasets from the NIH/NCBI sequencing read archive (SRA) database)
 
-#*** WORKING
-
 ## Requirements
 To run `SRAscraper` you need a UNIX environment that contains a [Bioconda](http://bioconda.github.io/) setup.
 
