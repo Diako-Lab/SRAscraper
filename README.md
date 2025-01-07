@@ -32,7 +32,6 @@ The command `SRAscraper create-config . config.yaml` is the first step in the pi
 ********
 
 ## Example
-nstallation
 Below is an example of how to generate a config.yaml by running `SRAscraper create-config` and then supplying the gds_result.txt file provided with the github repo to test installation. 
 
 ```
