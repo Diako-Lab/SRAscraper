@@ -31,12 +31,19 @@ for key in gse_dict.keys():
         print(f'Errors: {error}')
         print(f"\nRenamming {accession} fastqs")
         try:
+             os.rename(output_dir + '/fastq/' + key + '/' + accession + '/' + accession + '_3.fastq.gz',
+                    output_dir + '/fastq/' + key + '/' + accession + '/' + accession + '_S1_L001_I1_001.fastq.gz')
+        except FileNotFoundError:
+            print(f"\nIndex {accession}_3.fastq.gz file not found in GEO repo. Continuing with normal R1 R2 renaming.")
+        except OSError as e:
+            print("Error renaming file:", e)
+        try:
             os.rename(output_dir + '/fastq/' + key + '/' + accession + '/' + accession + '_1.fastq.gz',
                     output_dir + '/fastq/' + key + '/' + accession + '/' + accession + '_S1_L001_R1_001.fastq.gz')
             os.rename(output_dir + '/fastq/' + key + '/' + accession + '/' + accession + '_2.fastq.gz',
-                    output_dir + '/fastq/' + key + '/' + accession + '/' + accession + '_S2_L001_R1_001.fastq.gz')
+                    output_dir + '/fastq/' + key + '/' + accession + '/' + accession + '_S1_L001_R2_001.fastq.gz')
         except FileNotFoundError:
-            print("File not found.")
+            print(f"\nIndex {accession}_1/2.fastq.gz files not found in GEO repo.")
         except OSError as e:
             print("Error renaming file:", e)
 
