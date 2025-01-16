@@ -10,7 +10,7 @@ First, clone the SRAscraper github repo to your local machine and then set up a 
 ```
 git clone https://github.com/Diako-Lab/SRAscraper.git && cd SRAscraper
 
-conda env create -f environment.yaml
+conda env create -f environment.yml
 
 conda activate SRAscraper
 ```
