@@ -19,4 +19,5 @@ dependencies:
   - datrie
   - fastqc
   - multiqc
-  - libnsl
+  - libnsl  
+  - pysradb
