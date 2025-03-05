@@ -63,6 +63,13 @@ The folder structure created by `SRAscraper run-config` will look as follows:
 * QC - multiqc and fastqc files
 * logs - each pipeline step deposits its logs here
 
+###  Trouble shooting
+If the fastq file you are trying to donwload is very large sometime this can lead to erros with sra-toolkit running out of available memory to write the file to in the cache. This can sometimes be fixed by updating the vdb-config to increase the loacl cache storage size.
+```
+# Open up the interactive vdb-config window and make sure to set a local reporsitory you control as the chache dir and then increase the "ram used" setting up to at least a few GB I have mine set to 2GB or 16000 MB.
+vdb-config -i
+```
+
 ## Reporting errors / Requesting features
 If anything goes wrong using `SRAscraper` or any features are missing, feel free to open an issue on this github repo.
 
