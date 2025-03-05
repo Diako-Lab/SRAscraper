@@ -21,7 +21,7 @@ with open('dictionary_file.pkl', 'rb') as pkl_file:
 import subprocess
 
 for key in gse_dict.keys():
-    for accession in gse_dict[key]['SRR']:
+    for accession in gse_dict[key]['run_accession']:
         print(f"\nProcessing sample {accession} from the BioProject {key}")
         subprocess_1 = subprocess.Popen(
             ["parallel-fastq-dump", "--sra-id", accession, "--threads", str(computing_threads), "--outdir", 
@@ -53,7 +53,7 @@ for key in gse_dict.keys():
 # Go check some files with fastqc
 
 for key in gse_dict.keys():
-    for accession in gse_dict[key]['SRR']:
+    for accession in gse_dict[key]['run_accession']:
         subprocess_2 = subprocess.Popen(
             ["fastqc", "-t", str(computing_threads), "-o", os.path.join(output_dir, 'QC'), os.path.join(output_dir, 'fastq', key, accession, accession+'_S1_L001_R1_001.fastq.gz'), os.path.join(output_dir, 'fastq',  key, accession, accession+'_S2_L001_R1_001.fastq.gz')], stdout=subprocess.PIPE, text=True)
         output, error = subprocess_2.communicate()
