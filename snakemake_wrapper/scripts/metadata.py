@@ -91,8 +91,8 @@ print(f'''Of the initial imported {len(ftp_links)} datasets provided from the NC
 
 from itertools import compress
 ftp_list = list(compress(ftp_list, results))
-len(ftp_list)
 
+#%%
 # Go fetch all the valid GEO ftp links and get the .soft files
 # These will be needed to fetch all the GEO ftp files 
 import wget
@@ -103,6 +103,8 @@ import subprocess
 subprocess.run(["pysradb", "--version"])
 
 from pysradb.search import GeoSearch
+from pysradb.sraweb import SRAweb
+sradb = SRAweb()
 # Make a big dictionary that contains all the .soft file information
 gse_dict = {}
 for url in ftp_list:
@@ -110,15 +112,31 @@ for url in ftp_list:
         wget_this = url + 'soft/' + url[:-1].split('/', -1)[-1] + '_family.soft.gz'
         filename = wget.download(wget_this)
         gse = GEOparse.get_GEO(filepath=filename)
-        gse_dict[url[:-1].split('/', -1)[-1]] = gse.phenotype_data
+        gse_df = gse.phenotype_data
+        columns_to_select = ['title', 'geo_accession', 'extract_protocol_ch1', 'description, data_processing', 'platform_id',	'contact_name', 'contact_department', 'contact_institute', 'contact_address', 'contact_city', 'contact_state', 'contact_zip/postal_code', 'contact_country']
+        gse_df.drop(columns=gse_df.columns.difference(columns_to_select), inplace=True)
+
         instance = GeoSearch(2, 200, geo_query=url[:-1].split('/', -1)[-1])
         instance.search()
-        df = instance.get_df()
-        data_pysrad = {'SRR': df.run_1_accession.tolist(), 
-                'geo_accession': df.sample_alias.tolist(),
-                'Rep': list(range(1, len(df.run_1_accession)+1))}
-        df_pysrad = pd.DataFrame(data_pysrad)
-        gse_dict[url[:-1].split('/', -1)[-1]] = gse_dict[url[:-1].split('/', -1)[-1]].set_index('geo_accession').merge(df_pysrad, right_on='geo_accession', left_index=True)
+        instance_df = instance.get_df()
+        srp_dfs = []
+        for srp_id in instance_df.study_accession.unique():
+            srp_df = sradb.sra_metadata(srp_id, detailed = True)
+            srp_dfs.append(srp_df)
+           
+        if len(srp_dfs) > 1:
+            final_srp_df = pd.concat(srp_dfs, ignore_index=True)
+            #This might get you in trouble if the columns are different between srp look back here to fix that
+        else:
+            final_srp_df = srp_dfs[0]
+
+        gsm_ids = []
+        for string in final_srp_df["experiment_title"]:
+            gsm_id = string.split(":", 1)[0]
+            gsm_ids.append(gsm_id)
+            
+        final_srp_df['geo_accession'] = gsm_ids
+        gse_dict[url[:-1].split('/', -1)[-1]] = gse_df.merge(final_srp_df, right_on='geo_accession', left_index=True)
     except:
         pass
 
