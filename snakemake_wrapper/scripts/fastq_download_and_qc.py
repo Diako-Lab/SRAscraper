@@ -24,9 +24,18 @@ for key in gse_dict.keys():
     for accession in gse_dict[key]['run_accession']:
         print(f"\nProcessing sample {accession} from the BioProject {key}")
         subprocess_1 = subprocess.Popen(
-            ["parallel-fastq-dump", "--sra-id", accession, "--threads", str(computing_threads), "--outdir", 
-             output_dir+'/fastq/'+key+'/'+accession, "--split-spot", "--split-files", "--gzip"], stdout=subprocess.PIPE, text=True)
+            ["prefetch", accession, "-O", 
+             output_dir+'/fastq/'+key+'/'+accession, "--max-size", "u"], stdout=subprocess.PIPE, text=True)
         output, error = subprocess_1.communicate()
+        print(f'Outputs: {output}')
+        print(f'Errors: {error}')
+
+        os.chdir(output_dir+'/fastq/'+key+'/'+accession)
+         
+        subprocess_2 = subprocess.Popen(
+            ["parallel-fastq-dump", "-s", accession+".sra", "--threads", str(computing_threads), "--outdir", 
+             output_dir+'/fastq/'+key+'/'+accession, "--split-spot", "--split-files", "--gzip"], stdout=subprocess.PIPE, text=True)
+        output, error = subprocess_2.communicate()
         print(f'Outputs: {output}')
         print(f'Errors: {error}')
         print(f"\nRenamming {accession} fastqs")
@@ -54,17 +63,17 @@ for key in gse_dict.keys():
 
 for key in gse_dict.keys():
     for accession in gse_dict[key]['run_accession']:
-        subprocess_2 = subprocess.Popen(
+        subprocess_3 = subprocess.Popen(
             ["fastqc", "-t", str(computing_threads), "-o", os.path.join(output_dir, 'QC'), os.path.join(output_dir, 'fastq', key, accession, accession+'_S1_L001_R1_001.fastq.gz'), os.path.join(output_dir, 'fastq',  key, accession, accession+'_S2_L001_R1_001.fastq.gz')], stdout=subprocess.PIPE, text=True)
-        output, error = subprocess_2.communicate()
+        output, error = subprocess_3.communicate()
         print(f'Outputs: {output}')
         print(f'Errors: {error}')
 
 # Pull all the repoorts together with multiqc
 
-subprocess_3 = subprocess.Popen(
+subprocess_4 = subprocess.Popen(
     ["multiqc", "-o", os.path.join(output_dir, 'QC'), os.path.join(output_dir, 'QC')], stdout=subprocess.PIPE, text=True)
-output, error = subprocess_3.communicate()
+output, error = subprocess_4.communicate()
 print(f'Outputs: {output}')
 print(f'Errors: {error}')
 
