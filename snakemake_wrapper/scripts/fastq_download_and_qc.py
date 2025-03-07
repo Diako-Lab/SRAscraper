@@ -25,7 +25,7 @@ for key in gse_dict.keys():
         print(f"\nProcessing sample {accession} from the BioProject {key}")
         subprocess_1 = subprocess.Popen(
             ["prefetch", accession, "-O", 
-             output_dir+'/fastq/'+key+'/'+accession, "--max-size", "u"], stdout=subprocess.PIPE, text=True)
+             output_dir+'/fastq/'+key, "--max-size", "u"], stdout=subprocess.PIPE, text=True)
         output, error = subprocess_1.communicate()
         print(f'Outputs: {output}')
         print(f'Errors: {error}')
