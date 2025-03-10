@@ -55,6 +55,14 @@ for key in gse_dict.keys():
             print(f"\nIndex {accession}_1/2.fastq.gz files not found in GEO repo.")
         except OSError as e:
             print("Error renaming file:", e)
+        try:
+             file_path = output_dir + '/fastq/' + key + '/' + accession + '/' + accession + '.sra'
+             os.remove(file_path)
+             print(f"File '{file_path}' deleted successfully.")
+        except FileNotFoundError:
+             print(f"Error: File '{file_path}' not found.")
+        except Exception as e:
+             print(f"An unexpected error occurred: {e}")
 
 
 
