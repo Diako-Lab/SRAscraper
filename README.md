@@ -66,8 +66,12 @@ The folder structure created by `SRAscraper run-config` will look as follows:
 ###  Trouble shooting
 If the fastq file you are trying to donwload is very large sometime this can lead to erros with sra-toolkit running out of available memory to write the file to in the cache. This can sometimes be fixed by updating the vdb-config to increase the loacl cache storage size.
 ```
+# Figure how much ram you have available on your setup
+free -h
 # Open up the interactive vdb-config window and make sure to set a local reporsitory you control as the chache dir and then increase the "ram used" setting up to at least a few GB I have mine set to 2GB or 16000 MB.
 vdb-config -i
+# I have found that the vdb-config interface has it's own internal limits. I could not set the ram avialbe above 16,384 MB however this can be modified manually in the ~/.ncbi/user-settings.mkfg
+# Be sure to increase your /libs/cache_amount to match why you have available form the free -h command but in MB and then set /tools/prefetch/download_to_cache = "true"
 ```
 
 ## Reporting errors / Requesting features
