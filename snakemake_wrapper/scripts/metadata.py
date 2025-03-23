@@ -129,13 +129,10 @@ for url in ftp_list:
             #This might get you in trouble if the columns are different between srp look back here to fix that
         else:
             final_srp_df = srp_dfs[0]
-
-        gsm_ids = []
-        for string in final_srp_df["experiment_title"]:
-            gsm_id = string.split(":", 1)[0]
-            gsm_ids.append(gsm_id)
-            
-        final_srp_df['geo_accession'] = gsm_ids
+        
+        instance_df.drop(columns=instance_df.columns.difference(['run_1_accession', 'sample_alias']), inplace=True)
+        instance_df = instance_df.rename(columns={'run_1_accession': 'run_accession', 'sample_alias' : 'geo_accession'})
+        final_srp_df = pd.merge(final_srp_df, instance_df, on='run_accession', how='outer')
         gse_dict[url[:-1].split('/', -1)[-1]] = gse_df.merge(final_srp_df, right_on='geo_accession', left_index=True)
     except:
         pass
