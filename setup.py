@@ -5,10 +5,10 @@ import setuptools
 
 setuptools.setup(
     name='SRAscraper',
-    version='0.1.0',
+    version='0.1.1',
     author='Jake Lehle',
     author_email='jlehle@txbiomed.org',
-    description='Scraping the GEO database for ALL scRNA-seq datasets.',
+    description='Snakmake pipeline to pull fastq sequencing files from the SRA database using their GSE accession identifiers from GEO.',
     packages=[
         'cli',
         'snakemake_wrapper'
