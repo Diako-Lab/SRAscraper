@@ -12,23 +12,25 @@ def run_config(dry_run, config_yaml):
 
     print("[INFO] Invoking Snakemake with config {}".format(config_yaml))
 
-    finished_successfully = snakemake.snakemake(
-        snakefile=snakefile_location,
-        configfiles=[config_yaml],
-        dryrun=dry_run,
-        printshellcmds=True,
-        use_conda=True,
-        conda_prefix=conda_prefix
-    )
-    
     with open(config_yaml, 'r') as stream:
         data_loaded = yaml.safe_load(stream)
 
     output_dir = data_loaded['output_dir']
 
+    cores = data_loaded['computing_threads']
+    
     if not os.path.exists(output_dir):
-        os.mkdir(output_dir)    
-
+        os.mkdir(output_dir)
+    
+    finished_successfully = snakemake.snakemake(
+        snakefile=snakefile_location,
+        configfiles=[config_yaml],
+        cores=cores,
+        dryrun=dry_run,
+        printshellcmds=True,
+        use_conda=True,
+        conda_prefix=conda_prefix
+    )
 
     if not finished_successfully:
         os.sys.exit(os.EX_SOFTWARE)
