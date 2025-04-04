@@ -24,8 +24,8 @@ for key in gse_dict.keys():
     for accession in gse_dict[key]['run_accession']:
         print(f"\nProcessing sample {accession} from the BioProject {key}")
         subprocess_1 = subprocess.Popen(
-            ["prefetch", accession, "-O", 
-             output_dir+'/fastq/'+key, "--max-size", "u"], stdout=subprocess.PIPE, text=True)
+            ["prefetch", str(accession), "-O", 
+             str(output_dir) + '/fastq/' + str(key), "--max-size", "u"], stdout=subprocess.PIPE, text=True)
         output, error = subprocess_1.communicate()
         print(f'Outputs: {output}')
         print(f'Errors: {error}')
@@ -33,8 +33,8 @@ for key in gse_dict.keys():
         os.chdir(output_dir+'/fastq/'+key+'/'+accession)
          
         subprocess_2 = subprocess.Popen(
-            ["parallel-fastq-dump", "-s", accession+".sra", "--threads", str(computing_threads), "--outdir", 
-             output_dir+'/fastq/'+key+'/'+accession, "--split-spot", "--split-files", "--gzip"], stdout=subprocess.PIPE, text=True)
+            ["parallel-fastq-dump", "-s", str(accession) + ".sra", "--threads", str(computing_threads), "--outdir", 
+             str(output_dir) + '/fastq/' + str(key) + '/' + str(accession), "--split-spot", "--split-files", "--gzip"], stdout=subprocess.PIPE, text=True)
         output, error = subprocess_2.communicate()
         print(f'Outputs: {output}')
         print(f'Errors: {error}')
@@ -56,7 +56,7 @@ for key in gse_dict.keys():
         except OSError as e:
             print("Error renaming file:", e)
         try:
-             file_path = output_dir + '/fastq/' + key + '/' + accession + '/' + accession + '.sra'
+             file_path = os.path.join(output_dir, 'fastq', key, accession, str(accession) + '.sra')
              os.remove(file_path)
              print(f"File '{file_path}' deleted successfully.")
         except FileNotFoundError:
