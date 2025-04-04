@@ -33,8 +33,9 @@ for key in gse_dict.keys():
         os.chdir(output_dir+'/fastq/'+key+'/'+accession)
          
         subprocess_2 = subprocess.Popen(
-            ["parallel-fastq-dump", "-s", str(accession) + ".sra", "--threads", str(computing_threads), "--outdir", 
-             str(output_dir) + '/fastq/' + str(key) + '/' + str(accession), "--split-spot", "--split-files", "--gzip"], stdout=subprocess.PIPE, text=True)
+            ["parallel-fastq-dump", "-s", str(accession) + ".sra", "--threads", str(computing_threads), 
+             "--tmpdir", str(output_dir) + '/fastq/' + str(key) + '/' + str(accession),
+             "--outdir", str(output_dir) + '/fastq/' + str(key) + '/' + str(accession), "--split-spot", "--split-files", "--gzip"], stdout=subprocess.PIPE, text=True)
         output, error = subprocess_2.communicate()
         print(f'Outputs: {output}')
         print(f'Errors: {error}')
