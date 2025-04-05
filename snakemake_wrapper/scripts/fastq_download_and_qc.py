@@ -30,7 +30,7 @@ for key in gse_dict.keys():
         print(f'Outputs: {output}')
         print(f'Errors: {error}')
 
-        os.chdir(output_dir+'/fastq/'+key+'/'+accession)
+        os.chdir(os.path.join(str(output_dir), 'fastq', str(key), str(accession))
          
         subprocess_2 = subprocess.Popen(
             ["parallel-fastq-dump", "-s", str(accession) + ".sra", "--threads", str(computing_threads), 
@@ -41,23 +41,23 @@ for key in gse_dict.keys():
         print(f'Errors: {error}')
         print(f"\nRenamming {accession} fastqs")
         try:
-             os.rename(output_dir + '/fastq/' + key + '/' + accession + '/' + accession + '_3.fastq.gz',
-                    output_dir + '/fastq/' + key + '/' + accession + '/' + accession + '_S1_L001_I1_001.fastq.gz')
+             os.rename(os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_3.fastq.gz'),
+                       os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_S1_L001_I1_001.fastq.gz')
         except FileNotFoundError:
             print(f"\nIndex {accession}_3.fastq.gz file not found in GEO repo. Continuing with normal R1 R2 renaming.")
         except OSError as e:
             print("Error renaming file:", e)
         try:
-            os.rename(output_dir + '/fastq/' + key + '/' + accession + '/' + accession + '_1.fastq.gz',
-                    output_dir + '/fastq/' + key + '/' + accession + '/' + accession + '_S1_L001_R1_001.fastq.gz')
-            os.rename(output_dir + '/fastq/' + key + '/' + accession + '/' + accession + '_2.fastq.gz',
-                    output_dir + '/fastq/' + key + '/' + accession + '/' + accession + '_S1_L001_R2_001.fastq.gz')
+            os.rename(os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_1.fastq.gz'),
+                      os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_S1_L001_R1_001.fastq.gz')          
+            os.rename(os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_2.fastq.gz'),
+                      os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_S1_L001_R2_001.fastq.gz') 
         except FileNotFoundError:
             print(f"\nIndex {accession}_1/2.fastq.gz files not found in GEO repo.")
         except OSError as e:
             print("Error renaming file:", e)
         try:
-             file_path = os.path.join(output_dir, 'fastq', key, accession, str(accession) + '.sra')
+             file_path = os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '.sra')
              os.remove(file_path)
              print(f"File '{file_path}' deleted successfully.")
         except FileNotFoundError:
@@ -73,7 +73,9 @@ for key in gse_dict.keys():
 for key in gse_dict.keys():
     for accession in gse_dict[key]['run_accession']:
         subprocess_3 = subprocess.Popen(
-            ["fastqc", "-t", str(computing_threads), "-o", os.path.join(output_dir, 'QC'), os.path.join(output_dir, 'fastq', key, accession, accession+'_S1_L001_R1_001.fastq.gz'), os.path.join(output_dir, 'fastq',  key, accession, accession+'_S2_L001_R1_001.fastq.gz')], stdout=subprocess.PIPE, text=True)
+            ["fastqc", "-t", str(computing_threads), "-o", os.path.join(output_dir, 'QC'), 
+             os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_S1_L001_R1_001.fastq.gz'), 
+             os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_S2_L001_R1_001.fastq.gz')], stdout=subprocess.PIPE, text=True)
         output, error = subprocess_3.communicate()
         print(f'Outputs: {output}')
         print(f'Errors: {error}')
@@ -81,7 +83,7 @@ for key in gse_dict.keys():
 # Pull all the repoorts together with multiqc
 
 subprocess_4 = subprocess.Popen(
-    ["multiqc", "-o", os.path.join(output_dir, 'QC'), os.path.join(output_dir, 'QC')], stdout=subprocess.PIPE, text=True)
+    ["multiqc", "-o", os.path.join(str(output_dir), 'QC'), os.path.join(str(output_dir), 'QC')], stdout=subprocess.PIPE, text=True)
 output, error = subprocess_4.communicate()
 print(f'Outputs: {output}')
 print(f'Errors: {error}')
