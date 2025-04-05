@@ -30,7 +30,7 @@ for key in gse_dict.keys():
         print(f'Outputs: {output}')
         print(f'Errors: {error}')
 
-        os.chdir(os.path.join(str(output_dir), 'fastq', str(key), str(accession))
+        os.chdir(os.path.join(str(output_dir), 'fastq', str(key), str(accession)))
          
         subprocess_2 = subprocess.Popen(
             ["parallel-fastq-dump", "-s", str(accession) + ".sra", "--threads", str(computing_threads), 
@@ -42,16 +42,16 @@ for key in gse_dict.keys():
         print(f"\nRenamming {accession} fastqs")
         try:
              os.rename(os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_3.fastq.gz'),
-                       os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_S1_L001_I1_001.fastq.gz')
+                       os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_S1_L001_I1_001.fastq.gz'))
         except FileNotFoundError:
             print(f"\nIndex {accession}_3.fastq.gz file not found in GEO repo. Continuing with normal R1 R2 renaming.")
         except OSError as e:
             print("Error renaming file:", e)
         try:
             os.rename(os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_1.fastq.gz'),
-                      os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_S1_L001_R1_001.fastq.gz')          
+                      os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_S1_L001_R1_001.fastq.gz'))          
             os.rename(os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_2.fastq.gz'),
-                      os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_S1_L001_R2_001.fastq.gz') 
+                      os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_S1_L001_R2_001.fastq.gz')) 
         except FileNotFoundError:
             print(f"\nIndex {accession}_1/2.fastq.gz files not found in GEO repo.")
         except OSError as e:
