@@ -163,6 +163,7 @@ for url in ftp_list:
             final_srp_df = pd.merge(final_srp_df, instance_df, on='run_accession', how='outer')
             gse_dict[url[:-1].split('/', -1)[-1]] = gse_df_filtered.merge(final_srp_df, right_on='geo_accession', left_index=True, how='outer')
             gse_dict[url[:-1].split('/', -1)[-1]].drop(columns=['geo_accession_x', 'geo_accession_y'], inplace=True)
+            gse_dict[url[:-1].split('/', -1)[-1]].dropna(subset=['run_accession'], inplace=True)
         except:
             gse_df = gse.phenotype_data
             gse_dict[url[:-1].split('/', -1)[-1]] = gse_df
