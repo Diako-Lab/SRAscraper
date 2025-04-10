@@ -50,8 +50,8 @@ def url_ok(foo_url):
     transformed_url = 'https' + foo_url[3:] + 'soft/'
     # pass the url into
     # request.hear
-    max_retries=10 
-    retry_delay=1
+    max_retries=20 
+    retry_delay=60
     for attempt in range(max_retries):
         try:
             response = requests.head(transformed_url, timeout=10)
