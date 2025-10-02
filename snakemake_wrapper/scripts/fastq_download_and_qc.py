@@ -41,6 +41,12 @@ for key in gse_dict.keys():
         print(f'Errors: {error}')
         print(f"\nRenamming {accession} fastqs")
         try:
+             os.rename(os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_4.fastq.gz'),
+                       os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_S1_L001_I2_001.fastq.gz'))
+             print(f"\nIndex {accession}_4.fastq.gz file found in GEO repo. Confirm dual indexing in project.")
+        except OSError as e:
+            print("Error renaming file:", e)
+        try:
              os.rename(os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_3.fastq.gz'),
                        os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_S1_L001_I1_001.fastq.gz'))
         except FileNotFoundError:
