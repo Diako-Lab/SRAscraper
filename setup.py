@@ -5,7 +5,7 @@ import setuptools
 
 setuptools.setup(
     name='SRAscraper',
-    version='0.1.2',
+    version='0.1.3',
     author='Jake Lehle',
     author_email='jlehle@txbiomed.org',
     description='Snakmake pipeline to pull fastq sequencing files from the SRA database using their GSE accession identifiers from GEO.',
