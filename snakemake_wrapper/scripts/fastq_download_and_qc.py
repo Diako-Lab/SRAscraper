@@ -1,5 +1,24 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+SRAscraper Rule 2: Download and Rename
+
+This rule downloads SRA data and renames files to Cell Ranger format.
+
+STRATEGY:
+1. Load expected_read_types_ordered from Rule 1 (Entrez API)
+2. Download with prefetch + parallel-fastq-dump
+3. Map split files BY POSITION: _1→first type, _2→second type, etc.
+4. Use content analysis for VALIDATION (warn on mismatch)
+5. Rename to Cell Ranger format
+
+The key insight: Entrez original file order matches split file order!
+- _1.fastq.gz = first file in Entrez list
+- _2.fastq.gz = second file in Entrez list
+- etc.
+
+Cell Ranger format: {accession}_S1_L001_{R1|R2|I1|I2}_001.fastq.gz
+"""
 
 import os
 import sys
@@ -8,6 +27,7 @@ import subprocess
 import pickle
 import json
 import re
+import shutil
 from collections import Counter
 from datetime import datetime
 from pathlib import Path
@@ -24,7 +44,7 @@ os.chdir(metadata_dir)
 # CONFIGURATION
 # ============================================================================
 
-# Read length thresholds for 10x content classification
+# Read length thresholds for 10x content classification (for validation)
 BARCODE_UMI_LENGTHS = {24, 26, 28}  # R1 in 10x
 SAMPLE_INDEX_MAX_LENGTH = 12        # I1/I2 in 10x
 CDNA_MIN_LENGTH = 50                # R2 in 10x
@@ -32,7 +52,7 @@ SAMPLE_SIZE = 500
 
 
 # ============================================================================
-# CONTENT ANALYSIS FUNCTIONS
+# CONTENT ANALYSIS FUNCTIONS (for validation)
 # ============================================================================
 
 def sample_fastq_lengths(filepath, n_reads=SAMPLE_SIZE):
@@ -66,39 +86,38 @@ def sample_fastq_lengths(filepath, n_reads=SAMPLE_SIZE):
 
 
 def classify_read_by_length(length):
-    """Classify 10x read type by length"""
+    """Classify 10x read type by length (for validation)"""
     if length is None:
         return 'UNKNOWN'
     if length in BARCODE_UMI_LENGTHS:
-        return 'BARCODE_UMI'  # This is R1 in 10x
+        return 'BARCODE_UMI'  # Typically R1 in 10x (28bp)
     if length <= SAMPLE_INDEX_MAX_LENGTH:
-        return 'SAMPLE_INDEX'  # This is I1/I2 in 10x
+        return 'SAMPLE_INDEX'  # I1/I2 (8-10bp)
     if length >= CDNA_MIN_LENGTH:
-        return 'CDNA'  # This is R2 in 10x
+        return 'CDNA'  # Typically R2 in 10x (90-150bp)
     return 'UNKNOWN'
 
 
-def map_content_to_read_type(content_type):
-    """Map content classification to standard read type"""
-    mapping = {
-        'BARCODE_UMI': 'R1',
-        'CDNA': 'R2',
-        'SAMPLE_INDEX': 'I',  # Will be I1, I2, etc.
-    }
-    return mapping.get(content_type)
+def get_expected_content_type(read_type):
+    """Map read type to expected content type"""
+    if read_type == 'R1':
+        return ['BARCODE_UMI', 'CDNA']  # R1 can be either (28bp or 150bp)
+    elif read_type == 'R2':
+        return ['CDNA']  # R2 is always cDNA (150bp)
+    elif read_type in ['I1', 'I2']:
+        return ['SAMPLE_INDEX']  # Index reads (8-10bp)
+    return ['UNKNOWN']
 
 
 def analyze_split_files(sample_dir, accession):
     """
     Analyze all split files from fastq-dump.
-    Returns dict mapping filename to content analysis.
+    Returns list sorted by split number.
     """
-    results = {}
+    results = []
     
-    # Find split files (_1, _2, _3, _4, etc.)
     for f in os.listdir(sample_dir):
         if f.startswith(accession) and f.endswith('.fastq.gz'):
-            # Check if it's a numbered split file
             match = re.match(rf'{accession}_(\d+)\.fastq\.gz', f)
             if match:
                 split_num = int(match.group(1))
@@ -107,208 +126,234 @@ def analyze_split_files(sample_dir, accession):
                 length_info = sample_fastq_lengths(filepath)
                 content_type = classify_read_by_length(length_info.get('dominant_length'))
                 
-                results[f] = {
+                results.append({
+                    'filename': f,
                     'split_number': split_num,
                     'filepath': filepath,
                     'dominant_length': length_info.get('dominant_length'),
-                    'content_type': content_type,
-                    'read_type': map_content_to_read_type(content_type)
-                }
+                    'content_type': content_type
+                })
+    
+    # CRITICAL: Sort by split number to match Entrez order
+    results.sort(key=lambda x: x['split_number'])
     
     return results
 
 
-def rename_by_content_analysis(sample_dir, accession, file_analysis, expected_types=None):
-    """
-    Rename split files based on content analysis.
-    
-    If expected_types is provided (from metadata), validate against it.
-    
-    Returns list of rename operations.
-    """
-    renames = []
-    
-    # Group files by content type
-    content_groups = {
-        'BARCODE_UMI': [],
-        'CDNA': [],
-        'SAMPLE_INDEX': [],
-        'UNKNOWN': []
-    }
-    
-    for filename, info in file_analysis.items():
-        content_type = info.get('content_type', 'UNKNOWN')
-        content_groups[content_type].append((filename, info))
-    
-    # Assign read types
-    # R1 = BARCODE_UMI (24-28bp)
-    for filename, info in content_groups['BARCODE_UMI']:
-        new_name = f"{accession}_S1_L001_R1_001.fastq.gz"
-        renames.append(create_rename_record(sample_dir, filename, new_name, 'R1', info))
-    
-    # R2 = CDNA (50+ bp)
-    for filename, info in content_groups['CDNA']:
-        new_name = f"{accession}_S1_L001_R2_001.fastq.gz"
-        renames.append(create_rename_record(sample_dir, filename, new_name, 'R2', info))
-    
-    # I1, I2 = SAMPLE_INDEX (<=12bp)
-    for i, (filename, info) in enumerate(content_groups['SAMPLE_INDEX']):
-        idx_num = i + 1
-        new_name = f"{accession}_S1_L001_I{idx_num}_001.fastq.gz"
-        renames.append(create_rename_record(sample_dir, filename, new_name, f'I{idx_num}', info))
-    
-    # Perform renames
-    for rename in renames:
-        old_path = rename['old_path']
-        new_path = rename['new_path']
-        
-        try:
-            if old_path != new_path and os.path.exists(old_path):
-                os.rename(old_path, new_path)
-                rename['status'] = 'SUCCESS'
-            elif old_path == new_path:
-                rename['status'] = 'NO_CHANGE'
-            else:
-                rename['status'] = 'FILE_NOT_FOUND'
-        except Exception as e:
-            rename['status'] = 'ERROR'
-            rename['error'] = str(e)
-    
-    return renames
+# ============================================================================
+# POSITIONAL MAPPING (PRIMARY METHOD)
+# ============================================================================
 
-
-def create_rename_record(sample_dir, old_name, new_name, read_type, info):
-    """Create a rename record dict"""
-    return {
-        'original': old_name,
-        'new': new_name,
-        'read_type': read_type,
-        'content_type': info.get('content_type'),
-        'length': info.get('dominant_length'),
-        'old_path': os.path.join(sample_dir, old_name),
-        'new_path': os.path.join(sample_dir, new_name),
-        'status': None
-    }
-
-
-def rename_by_metadata_patterns(sample_dir, accession, file_analysis, expected_types):
+def map_by_position(split_files, expected_read_types_ordered):
     """
-    Rename files when metadata tells us exactly what read types exist.
+    Map split files to read types BY POSITION.
     
-    Uses content analysis to MAP split files to expected types.
-    Example: metadata says [I1, R1, R2], content says _1=28bp, _2=10bp, _3=90bp
-    -> 28bp matches R1, 10bp matches I1, 90bp matches R2
+    The Entrez original file order matches the split file order:
+    - _1.fastq.gz = first type in expected_read_types_ordered
+    - _2.fastq.gz = second type
+    - etc.
+    
+    Returns: dict {filename: read_type}
     """
-    renames = []
+    mapping = {}
     
-    # Build content-to-expected mapping
-    # For 10x: BARCODE_UMI->R1, CDNA->R2, SAMPLE_INDEX->I1/I2
-    content_to_expected = {}
-    
-    if 'R1' in expected_types:
-        content_to_expected['BARCODE_UMI'] = 'R1'
-    if 'R2' in expected_types:
-        content_to_expected['CDNA'] = 'R2'
-    
-    # Count expected sample indices
-    index_count = sum(1 for t in expected_types if t.startswith('I'))
-    index_assigned = 0
-    
-    for filename, info in file_analysis.items():
-        content_type = info.get('content_type')
-        
-        if content_type in content_to_expected:
-            read_type = content_to_expected[content_type]
-        elif content_type == 'SAMPLE_INDEX' and index_count > 0:
-            index_assigned += 1
-            read_type = f'I{index_assigned}'
+    for i, file_info in enumerate(split_files):
+        if i < len(expected_read_types_ordered):
+            mapping[file_info['filename']] = expected_read_types_ordered[i]
         else:
-            read_type = None
-        
-        if read_type:
-            new_name = f"{accession}_S1_L001_{read_type}_001.fastq.gz"
-            renames.append(create_rename_record(sample_dir, filename, new_name, read_type, info))
+            # More files than expected types - use generic naming
+            mapping[file_info['filename']] = f'R{i+1}'
     
-    # Perform renames
-    for rename in renames:
-        old_path = rename['old_path']
-        new_path = rename['new_path']
+    return mapping
+
+
+def validate_mapping(mapping, split_files):
+    """
+    Validate that content matches expected read types.
+    Returns list of warnings (empty if all OK).
+    """
+    warnings = []
+    
+    # Create lookup for file info
+    file_info_lookup = {f['filename']: f for f in split_files}
+    
+    for filename, read_type in mapping.items():
+        info = file_info_lookup.get(filename, {})
+        content_type = info.get('content_type')
+        expected_content = get_expected_content_type(read_type)
+        
+        if content_type and content_type not in expected_content:
+            length = info.get('dominant_length')
+            warnings.append(
+                f"{filename} mapped to {read_type}, but content is {content_type} ({length}bp). "
+                f"Expected: {expected_content}"
+            )
+    
+    return warnings
+
+
+# ============================================================================
+# FALLBACK: CONTENT-BASED MAPPING (when no metadata)
+# ============================================================================
+
+def map_by_content_analysis(split_files):
+    """
+    Map split files by content analysis when no metadata available.
+    Uses read length to classify files.
+    """
+    mapping = {}
+    
+    index_count = 0
+    has_r1 = False
+    has_r2 = False
+    
+    for f in split_files:
+        content_type = f['content_type']
+        filename = f['filename']
+        
+        if content_type == 'BARCODE_UMI' and not has_r1:
+            mapping[filename] = 'R1'
+            has_r1 = True
+        elif content_type == 'CDNA':
+            if not has_r2:
+                mapping[filename] = 'R2'
+                has_r2 = True
+            elif not has_r1:
+                # Both R1 and R2 are cDNA (no barcode file)
+                mapping[filename] = 'R1'
+                has_r1 = True
+            else:
+                mapping[filename] = f'R{f["split_number"]}'
+        elif content_type == 'SAMPLE_INDEX':
+            index_count += 1
+            mapping[filename] = f'I{index_count}'
+        else:
+            mapping[filename] = f'R{f["split_number"]}'
+    
+    return mapping
+
+
+# ============================================================================
+# RENAME FILES TO CELL RANGER FORMAT
+# ============================================================================
+
+def rename_files_to_cellranger(sample_dir, accession, mapping, split_files):
+    """
+    Rename files to Cell Ranger format.
+    Cell Ranger format: {accession}_S1_L001_{R1|R2|I1|I2}_001.fastq.gz
+    """
+    renames = []
+    file_info_lookup = {f['filename']: f for f in split_files}
+    
+    for old_name, read_type in mapping.items():
+        new_name = f"{accession}_S1_L001_{read_type}_001.fastq.gz"
+        old_path = os.path.join(sample_dir, old_name)
+        new_path = os.path.join(sample_dir, new_name)
+        
+        info = file_info_lookup.get(old_name, {})
+        
+        rename_record = {
+            'original': old_name,
+            'new': new_name,
+            'read_type': read_type,
+            'content_type': info.get('content_type'),
+            'dominant_length': info.get('dominant_length'),
+            'old_path': old_path,
+            'new_path': new_path,
+            'status': None
+        }
         
         try:
-            if old_path != new_path and os.path.exists(old_path):
+            if os.path.exists(old_path):
+                if os.path.exists(new_path) and old_path != new_path:
+                    os.remove(new_path)
                 os.rename(old_path, new_path)
-                rename['status'] = 'SUCCESS'
-            elif old_path == new_path:
-                rename['status'] = 'NO_CHANGE'
+                rename_record['status'] = 'SUCCESS'
             else:
-                rename['status'] = 'FILE_NOT_FOUND'
+                rename_record['status'] = 'FILE_NOT_FOUND'
         except Exception as e:
-            rename['status'] = 'ERROR'
-            rename['error'] = str(e)
+            rename_record['status'] = 'ERROR'
+            rename_record['error'] = str(e)
+        
+        renames.append(rename_record)
     
     return renames
 
 
-def download_bam_directly(accession, sample_dir, meta):
-    """
-    Download BAM file directly from cloud storage.
-    Uses URLs from metadata if available.
-    """
-    result = {
-        'method': 'direct_bam',
-        'files': [],
-        'status': 'FAILED'
-    }
+# ============================================================================
+# DOWNLOAD FUNCTIONS
+# ============================================================================
+
+def download_with_prefetch(accession, sample_dir, threads):
+    """Download using prefetch + parallel-fastq-dump"""
+    result = {'success': False, 'files': [], 'error': None}
     
-    # Try to get BAM URLs from original files
-    for f in meta.get('original_files', []):
-        if f.get('is_bam') and f.get('url'):
-            url = f['url']
-            filename = f['filename']
-            output_path = os.path.join(sample_dir, filename)
-            
-            try:
-                # Handle different URL schemes
-                if url.startswith('s3://'):
-                    # Use AWS CLI
-                    cmd = ['aws', 's3', 'cp', '--no-sign-request', url, output_path]
-                elif url.startswith('gs://'):
-                    # Use gsutil
-                    cmd = ['gsutil', 'cp', url, output_path]
-                else:
-                    # Use wget for FTP/HTTP
-                    cmd = ['wget', '-q', '-O', output_path, url]
-                
-                download_result = subprocess.run(cmd, capture_output=True, text=True, timeout=7200)
-                
-                if download_result.returncode == 0 and os.path.exists(output_path):
-                    result['files'].append({
-                        'filename': filename,
-                        'path': output_path,
-                        'status': 'SUCCESS'
-                    })
-                    result['status'] = 'SUCCESS'
-                else:
-                    result['files'].append({
-                        'filename': filename,
-                        'status': 'FAILED',
-                        'error': download_result.stderr
-                    })
-            except Exception as e:
-                result['files'].append({
-                    'filename': filename,
-                    'status': 'ERROR',
-                    'error': str(e)
-                })
+    parent_dir = os.path.dirname(sample_dir)
+    
+    # PREFETCH
+    print(f"    Prefetching {accession}...")
+    prefetch_result = subprocess.run(
+        ["prefetch", accession, "-O", parent_dir, "--max-size", "u"],
+        capture_output=True, text=True, timeout=3600
+    )
+    
+    if prefetch_result.returncode != 0:
+        result['error'] = f"Prefetch failed: {prefetch_result.stderr[:200]}"
+        return result
+    
+    # Find SRA file
+    sra_file = os.path.join(sample_dir, f"{accession}.sra")
+    if not os.path.exists(sra_file):
+        sra_file = os.path.join(sample_dir, accession, f"{accession}.sra")
+    if not os.path.exists(sra_file):
+        sra_file = os.path.join(parent_dir, accession, f"{accession}.sra")
+    
+    if not os.path.exists(sra_file):
+        result['error'] = "SRA file not found after prefetch"
+        return result
+    
+    print(f"    Found: {sra_file}")
+    
+    # PARALLEL-FASTQ-DUMP
+    print(f"    Extracting with parallel-fastq-dump (threads={threads})...")
+    extract_result = subprocess.run(
+        ["parallel-fastq-dump", "-s", sra_file,
+         "--threads", str(threads),
+         "--tmpdir", sample_dir,
+         "--outdir", sample_dir,
+         "--split-spot", "--split-files", "--gzip"],
+        capture_output=True, text=True, timeout=14400
+    )
+    
+    if extract_result.returncode != 0:
+        print(f"    Warning: {extract_result.stderr[:200]}")
+    
+    # List extracted files
+    for f in sorted(os.listdir(sample_dir)):
+        if f.endswith('.fastq.gz') and f.startswith(accession):
+            result['files'].append(f)
+    
+    # Cleanup SRA file
+    try:
+        if os.path.exists(sra_file):
+            os.remove(sra_file)
+        nested_dir = os.path.join(sample_dir, accession)
+        if os.path.exists(nested_dir):
+            shutil.rmtree(nested_dir)
+    except:
+        pass
+    
+    result['success'] = len(result['files']) > 0
+    print(f"    Downloaded: {result['files']}")
     
     return result
 
 
 # ============================================================================
-# MAIN DOWNLOAD LOGIC
+# MAIN PROCESSING
 # ============================================================================
 
-# Load metadata
+# Load metadata from Rule 1
 with open('dictionary_file.pkl', 'rb') as f:
     gse_dict = pickle.load(f)
     print('Loaded: dictionary_file.pkl')
@@ -319,7 +364,7 @@ if os.path.exists('file_metadata.pkl'):
         file_metadata = pickle.load(f)
         print(f'Loaded: file_metadata.pkl ({len(file_metadata)} runs)')
 else:
-    print('WARNING: No file_metadata.pkl - will use content analysis for all files')
+    print('WARNING: No file_metadata.pkl - will use content analysis only')
 
 # Create directories
 log_dir = os.path.join(output_dir, 'logs')
@@ -336,10 +381,9 @@ processing_log = {
         'success': 0,
         'partial': 0,
         'failed': 0,
-        'used_metadata_patterns': 0,
+        'used_positional_mapping': 0,
         'used_content_analysis': 0,
-        'bam_downloads': 0,
-        'kept_original': 0
+        'validation_warnings': 0
     }
 }
 
@@ -358,7 +402,9 @@ for key in gse_dict.keys():
             'status': None,
             'method': None,
             'expected_types': [],
+            'mapping': {},
             'renames': [],
+            'validation_warnings': [],
             'issues': []
         }
         
@@ -369,143 +415,115 @@ for key in gse_dict.keys():
         
         # Get metadata for this run
         meta = file_metadata.get(accession, {})
-        expected_types = meta.get('file_types_present', [])
-        is_bam = meta.get('is_bam', False)
+        expected_types = meta.get('expected_read_types_ordered', [])
         is_10x = meta.get('is_10x', False)
-        needs_content_analysis = meta.get('needs_content_analysis', True)
         
         sample_log['expected_types'] = expected_types
         
-        print(f"  Metadata: types={expected_types}, is_10x={is_10x}, is_bam={is_bam}")
+        print(f"  Expected types (ordered): {expected_types}")
+        print(f"  Is 10x: {is_10x}")
         
         # ================================================================
-        # Handle BAM files
+        # STEP 1: Download
         # ================================================================
-        if is_bam:
-            print(f"  Downloading BAM directly...")
-            bam_result = download_bam_directly(accession, sample_dir, meta)
-            
-            if bam_result['status'] == 'SUCCESS':
-                sample_log['status'] = 'SUCCESS'
-                sample_log['method'] = 'BAM_DIRECT'
-                processing_log['summary']['bam_downloads'] += 1
-                processing_log['summary']['success'] += 1
-                print(f"  ✓ BAM downloaded")
-                for f in bam_result['files']:
-                    print(f"    - {f['filename']}")
-            else:
-                print(f"  BAM download failed, trying fastq-dump fallback...")
-                is_bam = False  # Fall through to fastq-dump
+        download_result = download_with_prefetch(accession, sample_dir, computing_threads)
+        
+        if not download_result['success']:
+            print(f"  ERROR: {download_result.get('error')}")
+            sample_log['status'] = 'DOWNLOAD_FAILED'
+            sample_log['issues'].append(download_result.get('error'))
+            processing_log['samples'].append(sample_log)
+            processing_log['summary']['failed'] += 1
+            continue
         
         # ================================================================
-        # Standard SRA download with fastq-dump
+        # STEP 2: Analyze content (for validation)
         # ================================================================
-        if not is_bam:
-            # Step 1: Prefetch
-            print(f"  Prefetching...")
-            prefetch_result = subprocess.run(
-                ["prefetch", accession, "-O",
-                 os.path.join(output_dir, 'fastq', key), "--max-size", "u"],
-                capture_output=True, text=True
-            )
+        print(f"  Analyzing file content...")
+        split_files = analyze_split_files(sample_dir, accession)
+        
+        for f in split_files:
+            print(f"    {f['filename']}: {f['dominant_length']}bp → {f['content_type']}")
+        
+        # ================================================================
+        # STEP 3: Create mapping
+        # ================================================================
+        if expected_types and len(expected_types) == len(split_files):
+            # POSITIONAL MAPPING (primary method)
+            print(f"  Using POSITIONAL mapping (Entrez order)...")
+            mapping = map_by_position(split_files, expected_types)
+            sample_log['method'] = 'POSITIONAL'
+            processing_log['summary']['used_positional_mapping'] += 1
             
-            if prefetch_result.returncode != 0:
-                print(f"  ERROR: Prefetch failed")
-                sample_log['status'] = 'PREFETCH_FAILED'
-                sample_log['issues'].append(prefetch_result.stderr)
-                processing_log['samples'].append(sample_log)
-                processing_log['summary']['failed'] += 1
-                continue
-            
-            # Step 2: Extract with parallel-fastq-dump
-            print(f"  Extracting FASTQs...")
-            os.chdir(sample_dir)
-            
-            sra_file = os.path.join(sample_dir, f"{accession}.sra")
-            if not os.path.exists(sra_file):
-                alt_sra = os.path.join(sample_dir, accession, f"{accession}.sra")
-                if os.path.exists(alt_sra):
-                    sra_file = alt_sra
-            
-            if not os.path.exists(sra_file):
-                print(f"  ERROR: SRA file not found")
-                sample_log['status'] = 'SRA_NOT_FOUND'
-                processing_log['samples'].append(sample_log)
-                processing_log['summary']['failed'] += 1
-                continue
-            
-            extract_result = subprocess.run(
-                ["parallel-fastq-dump", "-s", sra_file,
-                 "--threads", str(computing_threads),
-                 "--tmpdir", sample_dir,
-                 "--outdir", sample_dir,
-                 "--split-spot", "--split-files", "--gzip"],
-                capture_output=True, text=True
-            )
-            
-            if extract_result.returncode != 0:
-                print(f"  ERROR: Extraction failed")
-                sample_log['status'] = 'EXTRACTION_FAILED'
-                sample_log['issues'].append(extract_result.stderr)
-                processing_log['samples'].append(sample_log)
-                processing_log['summary']['failed'] += 1
-                continue
-            
-            # Step 3: Analyze split files
-            print(f"  Analyzing files...")
-            file_analysis = analyze_split_files(sample_dir, accession)
-            
-            for fname, info in file_analysis.items():
-                print(f"    {fname}: {info['dominant_length']}bp → {info['content_type']}")
-            
-            # Step 4: Decide renaming strategy
-            if expected_types and not needs_content_analysis:
-                # We know from metadata what read types should exist
-                print(f"  Renaming by metadata patterns: {expected_types}")
-                renames = rename_by_metadata_patterns(sample_dir, accession, file_analysis, expected_types)
-                sample_log['method'] = 'METADATA_PATTERNS'
-                processing_log['summary']['used_metadata_patterns'] += 1
-                
-            elif is_10x or any(info['content_type'] in ['BARCODE_UMI', 'CDNA'] 
-                              for info in file_analysis.values()):
-                # Looks like 10x data, use content analysis
-                print(f"  Renaming by content analysis (10x detected)")
-                renames = rename_by_content_analysis(sample_dir, accession, file_analysis)
-                sample_log['method'] = 'CONTENT_ANALYSIS'
-                processing_log['summary']['used_content_analysis'] += 1
-                
-            else:
-                # Unknown/bulk data - keep original names
-                print(f"  Keeping original names (no patterns detected)")
-                renames = []
-                sample_log['method'] = 'KEEP_ORIGINAL'
-                sample_log['issues'].append("No R1/R2 patterns - keeping original names")
-                processing_log['summary']['kept_original'] += 1
-            
-            sample_log['renames'] = renames
-            
-            # Print rename results
-            for r in renames:
-                icon = '✓' if r['status'] == 'SUCCESS' else '·'
-                print(f"    {icon} {r['original']} → {r['new']} ({r.get('length')}bp)")
-            
-            # Step 5: Cleanup SRA file
-            try:
-                if os.path.exists(sra_file):
-                    os.remove(sra_file)
-            except:
-                pass
-            
-            # Determine final status
-            if sample_log['issues']:
-                sample_log['status'] = 'PARTIAL'
-                processing_log['summary']['partial'] += 1
-            else:
-                sample_log['status'] = 'SUCCESS'
-                processing_log['summary']['success'] += 1
+            # Validate
+            warnings = validate_mapping(mapping, split_files)
+            if warnings:
+                sample_log['validation_warnings'] = warnings
+                processing_log['summary']['validation_warnings'] += 1
+                for w in warnings:
+                    print(f"    ⚠ Warning: {w}")
+        
+        elif expected_types and len(expected_types) != len(split_files):
+            # File count mismatch - use content analysis
+            print(f"  File count mismatch: expected {len(expected_types)}, got {len(split_files)}")
+            print(f"  Using CONTENT-BASED mapping...")
+            mapping = map_by_content_analysis(split_files)
+            sample_log['method'] = 'CONTENT_ANALYSIS'
+            sample_log['issues'].append(f"File count mismatch: expected {len(expected_types)}, got {len(split_files)}")
+            processing_log['summary']['used_content_analysis'] += 1
+        
+        else:
+            # No metadata - use content analysis
+            print(f"  No metadata - using CONTENT-BASED mapping...")
+            mapping = map_by_content_analysis(split_files)
+            sample_log['method'] = 'CONTENT_ANALYSIS'
+            sample_log['issues'].append("No expected_read_types_ordered in metadata")
+            processing_log['summary']['used_content_analysis'] += 1
+        
+        sample_log['mapping'] = mapping
+        
+        print(f"  Mapping:")
+        for i, (old_name, read_type) in enumerate(mapping.items()):
+            info = next((f for f in split_files if f['filename'] == old_name), {})
+            expected = expected_types[i] if i < len(expected_types) else '-'
+            print(f"    _{i+1} ({info.get('dominant_length')}bp) → {read_type} (expected: {expected})")
+        
+        # ================================================================
+        # STEP 4: Rename files
+        # ================================================================
+        print(f"  Renaming files...")
+        renames = rename_files_to_cellranger(sample_dir, accession, mapping, split_files)
+        sample_log['renames'] = renames
+        
+        for r in renames:
+            icon = '✓' if r['status'] == 'SUCCESS' else '✗'
+            print(f"    {icon} {r['original']} → {r['new']}")
+        
+        # ================================================================
+        # STEP 5: Determine status
+        # ================================================================
+        successful_renames = [r for r in renames if r['status'] == 'SUCCESS']
+        
+        if len(successful_renames) == len(mapping):
+            sample_log['status'] = 'SUCCESS'
+            processing_log['summary']['success'] += 1
+        elif successful_renames:
+            sample_log['status'] = 'PARTIAL'
+            processing_log['summary']['partial'] += 1
+        else:
+            sample_log['status'] = 'FAILED'
+            processing_log['summary']['failed'] += 1
+        
+        print(f"  Final status: {sample_log['status']}")
+        
+        # List final files
+        print(f"  Final files:")
+        for f in sorted(os.listdir(sample_dir)):
+            if f.endswith('.fastq.gz'):
+                size = os.path.getsize(os.path.join(sample_dir, f))
+                print(f"    {f} ({size:,} bytes)")
         
         processing_log['samples'].append(sample_log)
-        print(f"  Final: {sample_log['status']} ({sample_log['method']})")
 
 
 # ============================================================================
@@ -531,20 +549,23 @@ print(f"  Success: {s['success']}")
 print(f"  Partial: {s['partial']}")
 print(f"  Failed: {s['failed']}")
 
-print(f"\nMethods used:")
-print(f"  Metadata patterns (R1/R2 from original names): {s['used_metadata_patterns']}")
-print(f"  Content analysis (read length): {s['used_content_analysis']}")
-print(f"  BAM direct download: {s['bam_downloads']}")
-print(f"  Kept original names: {s['kept_original']}")
+print(f"\nMapping method:")
+print(f"  Positional (Entrez order): {s['used_positional_mapping']}")
+print(f"  Content analysis (fallback): {s['used_content_analysis']}")
 
-# Show samples needing review
-needs_review = [s for s in processing_log['samples'] if s['method'] == 'KEEP_ORIGINAL']
-if needs_review:
-    print(f"\nSamples kept with original names ({len(needs_review)}):")
-    for s in needs_review[:5]:
-        print(f"  {s['accession']}")
-    if len(needs_review) > 5:
-        print(f"  ... and {len(needs_review) - 5} more")
+print(f"\nValidation:")
+print(f"  Samples with warnings: {s['validation_warnings']}")
+
+# Show samples with validation warnings
+samples_with_warnings = [s for s in processing_log['samples'] if s.get('validation_warnings')]
+if samples_with_warnings:
+    print(f"\nSamples with validation warnings ({len(samples_with_warnings)}):")
+    for s in samples_with_warnings[:5]:
+        print(f"  {s['accession']}:")
+        for w in s['validation_warnings']:
+            print(f"    - {w}")
+    if len(samples_with_warnings) > 5:
+        print(f"  ... and {len(samples_with_warnings) - 5} more")
 
 print(f"\nLog saved: {log_file}")
 
