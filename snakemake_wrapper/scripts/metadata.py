@@ -1,5 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+SRAscraper Rule 1: Metadata Collection
+
+This rule collects metadata from GEO/SRA including:
+- Sample information from GEO
+- Run accessions from SRA
+- CRITICAL: Original filenames from Entrez API (for R1/R2/I1/I2 mapping)
+
+Key output: file_metadata.pkl containing:
+- expected_read_types_ordered: ORDERED LIST of read types matching split file order
+- original_files: List of original filenames with their read types
+"""
 
 import os
 import sys
@@ -37,7 +49,11 @@ def get_sra_metadata_entrez(run_accession, max_retries=3):
     - Library information (strategy, layout, source)
     - Platform information
     
-    This is the PRIMARY source for original filenames.
+    CRITICAL: Returns expected_read_types_ordered as an ORDERED LIST
+    that matches the order of split files from fastq-dump.
+    
+    The order of original files in Entrez XML corresponds to READ_INDEX order,
+    which determines the _1, _2, _3, _4 split file numbering.
     """
     url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi"
     params = {
@@ -64,11 +80,12 @@ def get_sra_metadata_entrez(run_accession, max_retries=3):
                 'library_source': None,
                 'platform': None,
                 'instrument_model': None,
-                'original_files': [],
-                'file_types_present': set(),
+                'original_files': [],           # List of file info dicts (IN ORDER)
+                'expected_read_types_ordered': [],  # ORDERED list: [I1, I2, R1, R2]
+                'file_types_present': set(),    # Set for quick lookups
                 'is_10x': False,
                 'is_bam': False,
-                'needs_content_analysis': False
+                'num_expected_files': 0
             }
             
             # Parse library info
@@ -97,18 +114,28 @@ def get_sra_metadata_entrez(run_accession, max_retries=3):
                     break
             
             # Parse SRAFile elements - CRITICAL FOR ORIGINAL FILENAMES
+            # The ORDER of files here matches READ_INDEX order (split file order)
             for sra_file in root.iter('SRAFile'):
                 supertype = sra_file.get('supertype')
                 filename = sra_file.get('filename')
                 
                 # Only care about Original files (submitted by user)
                 if supertype == 'Original' and filename:
+                    # Check for S3 URLs in Alternatives child element
+                    s3_url = None
+                    for alt in sra_file.iter('Alternatives'):
+                        alt_url = alt.get('url', '')
+                        if alt_url.startswith('s3://'):
+                            s3_url = alt_url
+                            break
+                    
                     file_info = {
                         'filename': filename,
                         'semantic_name': sra_file.get('semantic_name'),
                         'size': sra_file.get('size'),
                         'md5': sra_file.get('md5'),
                         'url': sra_file.get('url'),
+                        's3_url': s3_url,
                         'cluster': sra_file.get('cluster'),
                         'read_type': extract_read_type(filename),
                         'is_bam': filename.lower().endswith('.bam'),
@@ -117,24 +144,22 @@ def get_sra_metadata_entrez(run_accession, max_retries=3):
                     
                     result['original_files'].append(file_info)
                     
-                    if file_info['read_type']:
+                    # Build ORDERED list of read types
+                    if file_info['is_fastq'] and file_info['read_type']:
+                        result['expected_read_types_ordered'].append(file_info['read_type'])
                         result['file_types_present'].add(file_info['read_type'])
                     
                     if file_info['is_bam']:
                         result['is_bam'] = True
+            
+            # Number of expected FASTQ files
+            result['num_expected_files'] = len([f for f in result['original_files'] if f['is_fastq']])
             
             # Convert set to list for JSON serialization
             result['file_types_present'] = list(result['file_types_present'])
             
             # Detect 10x single-cell
             result['is_10x'] = detect_10x(result)
-            
-            # Determine if content analysis is needed
-            # (no original files OR original files don't have read type patterns)
-            if not result['original_files']:
-                result['needs_content_analysis'] = True
-            elif not result['file_types_present']:
-                result['needs_content_analysis'] = True
             
             return result
             
@@ -145,7 +170,8 @@ def get_sra_metadata_entrez(run_accession, max_retries=3):
     return {
         'run_accession': run_accession,
         'error': 'Failed to fetch metadata',
-        'needs_content_analysis': True
+        'expected_read_types_ordered': [],
+        'original_files': []
     }
 
 
@@ -159,6 +185,7 @@ def extract_read_type(filename):
     
     name_upper = filename.upper()
     
+    # Order matters - check more specific patterns first
     patterns = [
         (r'[_\.\-]R1[_\.\-]', 'R1'),
         (r'[_\.\-]R2[_\.\-]', 'R2'),
@@ -378,8 +405,8 @@ for url in ftp_list:
                 if meta.get('error'):
                     print(f"ERROR")
                 elif meta.get('original_files'):
-                    types = meta.get('file_types_present', [])
-                    print(f"Found {len(meta['original_files'])} files: {', '.join(types) if types else 'no R1/R2 pattern'}")
+                    ordered_types = meta.get('expected_read_types_ordered', [])
+                    print(f"Found {len(meta['original_files'])} files, ordered types: {ordered_types}")
                 else:
                     print(f"No original files")
                 
@@ -408,8 +435,8 @@ Runs with metadata: {len(file_metadata)}
 ''')
 
 # Categorize by what we found
-has_original_names = 0
-needs_content_analysis = 0
+has_ordered_types = 0
+no_patterns = 0
 is_bam = 0
 is_10x = 0
 
@@ -418,15 +445,21 @@ for run, meta in file_metadata.items():
         is_bam += 1
     if meta.get('is_10x'):
         is_10x += 1
-    if meta.get('original_files') and meta.get('file_types_present'):
-        has_original_names += 1
-    if meta.get('needs_content_analysis'):
-        needs_content_analysis += 1
+    if meta.get('expected_read_types_ordered'):
+        has_ordered_types += 1
+    else:
+        no_patterns += 1
 
-print(f"Has original filenames with R1/R2 patterns: {has_original_names}")
-print(f"Needs content-based analysis: {needs_content_analysis}")
+print(f"Has ordered read types (can map by position): {has_ordered_types}")
+print(f"No R1/R2 patterns (needs content analysis): {no_patterns}")
 print(f"BAM files: {is_bam}")
 print(f"Likely 10x single-cell: {is_10x}")
+
+# Show example of ordered types
+print(f"\nExample expected_read_types_ordered:")
+for run, meta in list(file_metadata.items())[:3]:
+    ordered = meta.get('expected_read_types_ordered', [])
+    print(f"  {run}: {ordered}")
 
 # Save
 with open('dictionary_file.pkl', 'wb') as f:
