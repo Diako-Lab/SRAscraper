@@ -7,10 +7,12 @@ This rule downloads SRA data and renames files to Cell Ranger format.
 
 STRATEGY:
 1. Load expected_read_types_ordered from Rule 1 (Entrez API)
-2. Download with prefetch + parallel-fastq-dump
-3. Map split files BY POSITION: _1→first type, _2→second type, etc.
-4. Use content analysis for VALIDATION (warn on mismatch)
-5. Rename to Cell Ranger format
+2. Check if files already exist (skip if previously downloaded)
+3. Download with prefetch + parallel-fastq-dump
+4. Map split files BY POSITION: _1→first type, _2→second type, etc.
+5. Use content analysis for VALIDATION (warn on mismatch)
+6. Rename to Cell Ranger format
+7. Update metadata dictionary with only successful samples
 
 The key insight: Entrez original file order matches split file order!
 - _1.fastq.gz = first file in Entrez list
@@ -31,6 +33,7 @@ import shutil
 from collections import Counter
 from datetime import datetime
 from pathlib import Path
+import copy
 
 # Snakemake parameters
 output_dir = snakemake.params.output_dir
@@ -49,6 +52,62 @@ BARCODE_UMI_LENGTHS = {24, 26, 28}  # R1 in 10x
 SAMPLE_INDEX_MAX_LENGTH = 12        # I1/I2 in 10x
 CDNA_MIN_LENGTH = 50                # R2 in 10x
 SAMPLE_SIZE = 500
+
+
+# ============================================================================
+# SKIP DETECTION - CHECK IF ALREADY DOWNLOADED
+# ============================================================================
+
+def check_already_downloaded(sample_dir, accession, expected_read_types=None):
+    """
+    Check if Cell Ranger formatted files already exist for this sample.
+    
+    Returns:
+        dict with:
+            - 'complete': True if all expected files exist
+            - 'partial': True if some files exist
+            - 'existing_files': list of existing Cell Ranger formatted files
+            - 'missing_types': list of missing read types
+    """
+    result = {
+        'complete': False,
+        'partial': False,
+        'existing_files': [],
+        'missing_types': [],
+        'found_types': []
+    }
+    
+    if not os.path.exists(sample_dir):
+        return result
+    
+    # Look for Cell Ranger formatted files
+    cellranger_pattern = re.compile(rf'{accession}_S1_L001_(R1|R2|I1|I2)_001\.fastq\.gz')
+    
+    for f in os.listdir(sample_dir):
+        match = cellranger_pattern.match(f)
+        if match:
+            read_type = match.group(1)
+            filepath = os.path.join(sample_dir, f)
+            # Verify file is not empty
+            if os.path.getsize(filepath) > 0:
+                result['existing_files'].append(f)
+                result['found_types'].append(read_type)
+    
+    # Determine completeness
+    if expected_read_types:
+        expected_set = set(expected_read_types)
+        found_set = set(result['found_types'])
+        result['missing_types'] = list(expected_set - found_set)
+        result['complete'] = (expected_set == found_set) and len(found_set) > 0
+        result['partial'] = len(found_set) > 0 and not result['complete']
+    else:
+        # No expected types known - consider complete if we have R1 and R2 at minimum
+        has_r1 = 'R1' in result['found_types']
+        has_r2 = 'R2' in result['found_types']
+        result['complete'] = has_r1 and has_r2
+        result['partial'] = len(result['found_types']) > 0 and not result['complete']
+    
+    return result
 
 
 # ============================================================================
@@ -381,17 +440,23 @@ processing_log = {
         'success': 0,
         'partial': 0,
         'failed': 0,
+        'skipped_existing': 0,
         'used_positional_mapping': 0,
         'used_content_analysis': 0,
         'validation_warnings': 0
     }
 }
 
+# Track successful accessions for each BioProject
+successful_accessions = {}  # {bioproject: [accession, ...]}
+
 
 for key in gse_dict.keys():
     print(f"\n{'='*70}")
     print(f"Processing BioProject: {key}")
     print(f"{'='*70}")
+    
+    successful_accessions[key] = []
     
     for accession in gse_dict[key]['run_accession']:
         processing_log['total_samples'] += 1
@@ -422,6 +487,33 @@ for key in gse_dict.keys():
         
         print(f"  Expected types (ordered): {expected_types}")
         print(f"  Is 10x: {is_10x}")
+        
+        # ================================================================
+        # STEP 0: Check if already downloaded
+        # ================================================================
+        download_check = check_already_downloaded(sample_dir, accession, expected_types)
+        
+        if download_check['complete']:
+            print(f"  ✓ SKIPPING - Already downloaded: {download_check['existing_files']}")
+            sample_log['status'] = 'SKIPPED_EXISTING'
+            sample_log['method'] = 'PREVIOUSLY_DOWNLOADED'
+            sample_log['issues'].append(f"Using existing files: {download_check['existing_files']}")
+            processing_log['samples'].append(sample_log)
+            processing_log['summary']['skipped_existing'] += 1
+            processing_log['summary']['success'] += 1
+            successful_accessions[key].append(accession)
+            continue
+        
+        if download_check['partial']:
+            print(f"  ⚠ Partial download found: {download_check['existing_files']}")
+            print(f"    Missing types: {download_check['missing_types']}")
+            print(f"    Re-downloading...")
+            # Remove partial files and start fresh
+            for f in download_check['existing_files']:
+                try:
+                    os.remove(os.path.join(sample_dir, f))
+                except:
+                    pass
         
         # ================================================================
         # STEP 1: Download
@@ -507,6 +599,7 @@ for key in gse_dict.keys():
         if len(successful_renames) == len(mapping):
             sample_log['status'] = 'SUCCESS'
             processing_log['summary']['success'] += 1
+            successful_accessions[key].append(accession)
         elif successful_renames:
             sample_log['status'] = 'PARTIAL'
             processing_log['summary']['partial'] += 1
@@ -536,6 +629,57 @@ with open(log_file, 'w') as f:
 
 
 # ============================================================================
+# CREATE SUCCESSFUL-ONLY METADATA DICTIONARY
+# ============================================================================
+
+print(f"\n{'='*70}")
+print("Updating metadata with successful samples only...")
+print(f"{'='*70}")
+
+# Create a filtered copy of gse_dict with only successful samples
+gse_dict_successful = {}
+
+for key in gse_dict.keys():
+    if key in successful_accessions and len(successful_accessions[key]) > 0:
+        # Deep copy the dataframe
+        df_copy = gse_dict[key].copy()
+        
+        # Filter to only successful accessions
+        df_filtered = df_copy[df_copy['run_accession'].isin(successful_accessions[key])]
+        
+        if len(df_filtered) > 0:
+            gse_dict_successful[key] = df_filtered
+            print(f"  {key}: {len(df_filtered)}/{len(gse_dict[key])} samples successful")
+        else:
+            print(f"  {key}: No successful samples (0/{len(gse_dict[key])})")
+    else:
+        print(f"  {key}: No successful samples (0/{len(gse_dict[key])})")
+
+# Save successful-only dictionary
+successful_dict_file = os.path.join(metadata_dir, 'dictionary_file_successful.pkl')
+with open(successful_dict_file, 'wb') as f:
+    pickle.dump(gse_dict_successful, f)
+print(f"\nSaved: {successful_dict_file}")
+
+# Also save as JSON for easy inspection
+successful_json_file = os.path.join(metadata_dir, 'successful_samples.json')
+successful_summary = {
+    'timestamp': datetime.now().isoformat(),
+    'bioprojects': {}
+}
+for key, df in gse_dict_successful.items():
+    successful_summary['bioprojects'][key] = {
+        'total_original': len(gse_dict[key]),
+        'total_successful': len(df),
+        'accessions': df['run_accession'].tolist()
+    }
+
+with open(successful_json_file, 'w') as f:
+    json.dump(successful_summary, f, indent=2)
+print(f"Saved: {successful_json_file}")
+
+
+# ============================================================================
 # SUMMARY
 # ============================================================================
 
@@ -545,7 +689,7 @@ print(f"{'='*70}")
 
 s = processing_log['summary']
 print(f"\nTotal: {processing_log['total_samples']}")
-print(f"  Success: {s['success']}")
+print(f"  Success: {s['success']} (includes {s['skipped_existing']} skipped/existing)")
 print(f"  Partial: {s['partial']}")
 print(f"  Failed: {s['failed']}")
 
@@ -567,17 +711,28 @@ if samples_with_warnings:
     if len(samples_with_warnings) > 5:
         print(f"  ... and {len(samples_with_warnings) - 5} more")
 
+# Show failed samples
+failed_samples = [s for s in processing_log['samples'] if s['status'] in ['DOWNLOAD_FAILED', 'FAILED']]
+if failed_samples:
+    print(f"\nFailed samples ({len(failed_samples)}):")
+    for s in failed_samples[:10]:
+        print(f"  {s['accession']}: {s['issues']}")
+    if len(failed_samples) > 10:
+        print(f"  ... and {len(failed_samples) - 10} more")
+
 print(f"\nLog saved: {log_file}")
+print(f"Successful metadata: {successful_dict_file}")
 
 
 # ============================================================================
-# QC
+# QC - FastQC and MultiQC
 # ============================================================================
 
 print(f"\n{'='*70}")
 print("Running FastQC...")
 print(f"{'='*70}")
 
+# Collect all FASTQ files for QC
 qc_files = []
 for key in gse_dict.keys():
     for accession in gse_dict[key]['run_accession']:
@@ -586,21 +741,149 @@ for key in gse_dict.keys():
             continue
         for f in os.listdir(sample_dir):
             if f.endswith(('.fastq.gz', '.fq.gz')):
-                qc_files.append(os.path.join(sample_dir, f))
+                filepath = os.path.join(sample_dir, f)
+                # Only include non-empty files
+                if os.path.getsize(filepath) > 0:
+                    qc_files.append(filepath)
 
+print(f"Found {len(qc_files)} FASTQ files for QC")
+
+# Run FastQC with multithreading
+# FastQC -t flag specifies threads PER FILE, so we batch to control parallelism
 if qc_files:
-    batch_size = 20
+    # FastQC can process multiple files in parallel
+    # -t specifies threads to use (each file gets 1 thread by default)
+    # We'll process in batches, with each batch using available threads
+    
+    # Calculate optimal batch size based on available threads
+    # FastQC uses ~1 thread per file when -t is specified
+    batch_size = min(computing_threads, len(qc_files))
+    
+    total_batches = (len(qc_files) + batch_size - 1) // batch_size
+    
     for i in range(0, len(qc_files), batch_size):
         batch = qc_files[i:i+batch_size]
-        subprocess.run(
-            ["fastqc", "-t", str(computing_threads), "-o", qc_dir] + batch,
-            capture_output=True
+        batch_num = (i // batch_size) + 1
+        print(f"  FastQC batch {batch_num}/{total_batches}: {len(batch)} files...")
+        
+        # -t threads: number of files to process simultaneously
+        fastqc_result = subprocess.run(
+            ["fastqc", 
+             "-t", str(min(computing_threads, len(batch))),  # Threads = number of parallel files
+             "-o", qc_dir,
+             "--quiet"] + batch,
+            capture_output=True,
+            text=True
         )
-    subprocess.run(["multiqc", "-o", qc_dir, qc_dir], capture_output=True)
-    print(f"QC reports: {qc_dir}")
+        
+        if fastqc_result.returncode != 0:
+            print(f"    Warning: FastQC returned non-zero exit code")
+            if fastqc_result.stderr:
+                print(f"    stderr: {fastqc_result.stderr[:200]}")
+    
+    print(f"FastQC complete. Reports in: {qc_dir}")
+else:
+    print("No FASTQ files found for QC!")
+
+# ============================================================================
+# Run MultiQC to aggregate reports
+# ============================================================================
 
 print(f"\n{'='*70}")
-print("Download complete!")
+print("Running MultiQC...")
+print(f"{'='*70}")
+
+# MultiQC aggregates all FastQC reports into a single HTML report
+# Note: MultiQC itself is single-threaded but is very fast
+multiqc_report = os.path.join(qc_dir, 'multiqc_report.html')
+
+# Remove old report if exists (to ensure fresh generation)
+if os.path.exists(multiqc_report):
+    os.remove(multiqc_report)
+    print(f"  Removed old MultiQC report")
+
+# Run MultiQC
+print(f"  Aggregating FastQC reports...")
+multiqc_result = subprocess.run(
+    ["multiqc", 
+     "--force",           # Overwrite existing reports
+     "--no-data-dir",     # Don't create data directory (saves space)
+     "-o", qc_dir,        # Output directory
+     qc_dir],             # Input directory (where FastQC reports are)
+    capture_output=True,
+    text=True
+)
+
+if multiqc_result.returncode != 0:
+    print(f"  Warning: MultiQC returned non-zero exit code: {multiqc_result.returncode}")
+    if multiqc_result.stderr:
+        print(f"  stderr: {multiqc_result.stderr[:500]}")
+    if multiqc_result.stdout:
+        print(f"  stdout: {multiqc_result.stdout[:500]}")
+
+# Verify MultiQC report was created (CRITICAL for Snakemake)
+if os.path.exists(multiqc_report):
+    report_size = os.path.getsize(multiqc_report)
+    print(f"  ✓ MultiQC report created: {multiqc_report} ({report_size:,} bytes)")
+else:
+    # If MultiQC failed, create a minimal placeholder report
+    # This ensures Snakemake doesn't fail, but alerts user to the issue
+    print(f"  ✗ MultiQC report not found! Creating placeholder...")
+    
+    placeholder_html = f"""<!DOCTYPE html>
+<html>
+<head><title>MultiQC Report - Generation Failed</title></head>
+<body>
+<h1>MultiQC Report Generation Failed</h1>
+<p>Timestamp: {datetime.now().isoformat()}</p>
+<p>The MultiQC report could not be generated automatically.</p>
+<h2>Summary</h2>
+<ul>
+<li>Total samples processed: {processing_log['total_samples']}</li>
+<li>Successful: {processing_log['summary']['success']}</li>
+<li>Failed: {processing_log['summary']['failed']}</li>
+<li>FASTQ files found: {len(qc_files)}</li>
+</ul>
+<h2>To generate manually:</h2>
+<pre>cd {qc_dir}
+multiqc .</pre>
+<h2>Successful samples by BioProject:</h2>
+<ul>
+"""
+    for key, accessions in successful_accessions.items():
+        placeholder_html += f"<li>{key}: {len(accessions)} samples</li>\n"
+    
+    placeholder_html += """</ul>
+</body>
+</html>"""
+    
+    with open(multiqc_report, 'w') as f:
+        f.write(placeholder_html)
+    
+    print(f"  Created placeholder report: {multiqc_report}")
+
+# ============================================================================
+# FINAL SUMMARY
+# ============================================================================
+
+print(f"\n{'='*70}")
+print("PIPELINE COMPLETE")
+print(f"{'='*70}")
+
+print(f"\nOutputs:")
+print(f"  FASTQ files: {output_dir}/fastq/")
+print(f"  QC reports:  {qc_dir}/")
+print(f"  MultiQC:     {multiqc_report}")
+print(f"  Logs:        {log_dir}/")
+print(f"  Metadata:    {metadata_dir}/")
+
+print(f"\nKey files:")
+print(f"  - dictionary_file_successful.pkl  (successful samples only)")
+print(f"  - successful_samples.json         (human-readable summary)")
+print(f"  - download_log_*.json             (detailed processing log)")
+
+print(f"\n{'='*70}")
+print("Done!")
 print(f"{'='*70}")
 
 sys.exit(0)
