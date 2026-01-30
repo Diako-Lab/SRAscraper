@@ -414,8 +414,49 @@ def download_with_prefetch(accession, sample_dir, threads):
 
 # Load metadata from Rule 1
 with open('dictionary_file.pkl', 'rb') as f:
-    gse_dict = pickle.load(f)
+    gse_dict_raw = pickle.load(f)
     print('Loaded: dictionary_file.pkl')
+
+# Validate gse_dict - ensure all entries have 'run_accession' column
+gse_dict = {}
+for key, df in gse_dict_raw.items():
+    if 'run_accession' not in df.columns:
+        print(f"WARNING: Skipping {key} - no 'run_accession' column found")
+        print(f"  Available columns: {list(df.columns)}")
+        continue
+    if len(df) == 0:
+        print(f"WARNING: Skipping {key} - empty dataframe")
+        continue
+    # Drop any rows with missing run_accession
+    df_clean = df.dropna(subset=['run_accession']).copy()
+    if len(df_clean) == 0:
+        print(f"WARNING: Skipping {key} - no valid run_accession values")
+        continue
+    gse_dict[key] = df_clean
+    print(f"  {key}: {len(df_clean)} samples")
+
+if len(gse_dict) == 0:
+    print("ERROR: No valid datasets found with run_accession column!")
+    print("Please check your metadata collection step.")
+    # Create QC directory and placeholder report to allow pipeline to complete
+    qc_dir = os.path.join(output_dir, 'QC')
+    os.makedirs(qc_dir, exist_ok=True)
+    multiqc_report = os.path.join(qc_dir, 'multiqc_report.html')
+    with open(multiqc_report, 'w') as f:
+        f.write(f"""<!DOCTYPE html>
+<html>
+<head><title>MultiQC Report - No Data</title></head>
+<body>
+<h1>No Valid Data Found</h1>
+<p>Timestamp: {datetime.now().isoformat()}</p>
+<p>The metadata collection step did not find any datasets with valid run_accession values.</p>
+<p>Please check your NCBI search text file and ensure the GEO datasets have linked SRA data.</p>
+</body>
+</html>""")
+    print(f"Created placeholder report: {multiqc_report}")
+    sys.exit(0)
+
+print(f"Total valid datasets: {len(gse_dict)}")
 
 file_metadata = {}
 if os.path.exists('file_metadata.pkl'):

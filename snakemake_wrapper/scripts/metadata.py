@@ -8,7 +8,8 @@ This rule collects metadata from GEO/SRA including:
 - Run accessions from SRA
 - CRITICAL: Original filenames from Entrez API (for R1/R2/I1/I2 mapping)
 
-Key output: file_metadata.pkl containing:
+Key output: dictionary_file.pkl containing:
+- DataFrames with 'run_accession' column for each BioProject
 - expected_read_types_ordered: ORDERED LIST of read types matching split file order
 - original_files: List of original filenames with their read types
 """
@@ -28,7 +29,8 @@ from math import ceil
 from time import perf_counter
 
 # Snakemake parameters
-metadata_dir = os.path.join(snakemake.params.output_dir, 'metadata')
+output_dir = snakemake.params.output_dir
+metadata_dir = os.path.join(output_dir, 'metadata')
 NCBI_search_txt = snakemake.params.NCBI_search_txt
 computing_threads = snakemake.params.computing_threads
 
@@ -36,6 +38,10 @@ pd.options.display.max_colwidth = 10000
 
 os.makedirs(metadata_dir, exist_ok=True)
 os.chdir(metadata_dir)
+
+print(f"Working directory: {os.getcwd()}")
+print(f"Output directory: {output_dir}")
+print(f"Metadata directory: {metadata_dir}")
 
 
 # ============================================================================
@@ -280,9 +286,9 @@ ftp_list_input = ftp_list
 N = len(ftp_list_input)
 
 with ThreadPool(computing_threads) as pool:
-    chunksize = ceil(len(ftp_list_input) / computing_threads)
+    chunksize = ceil(len(ftp_list_input) / computing_threads) if computing_threads > 0 else 1
     start = perf_counter()
-    results = list(pool.map_async(url_ok, ftp_list_input, chunksize=chunksize).get())
+    results = list(pool.map_async(url_ok, ftp_list_input, chunksize=max(1, chunksize)).get())
     end = perf_counter()
     print(f'URL checking duration: {end-start:.4f}s')
 
@@ -335,12 +341,13 @@ for url in ftp_list:
     print(f"Processing: {url}")
     print(f"{'='*60}")
     
+    gse_id = url[:-1].split('/', -1)[-1]
+    
     try:
-        wget_this = url + 'soft/' + url[:-1].split('/', -1)[-1] + '_family.soft.gz'
+        wget_this = url + 'soft/' + gse_id + '_family.soft.gz'
         filename = download_with_retry(wget_this)
         gse = GEOparse.get_GEO(filepath=filename)
         gse_df = gse.phenotype_data
-        gse_id = url[:-1].split('/', -1)[-1]
         
         try:
             columns_to_select = [
@@ -389,7 +396,12 @@ for url in ftp_list:
             merged_df.drop(columns=['geo_accession_x', 'geo_accession_y'], inplace=True, errors='ignore')
             merged_df.dropna(subset=['run_accession'], inplace=True)
             
+            # CRITICAL: Verify we have run_accession column with data
+            if 'run_accession' not in merged_df.columns or len(merged_df) == 0:
+                raise ValueError(f"No valid run_accession found for {gse_id}")
+            
             gse_dict[gse_id] = merged_df
+            print(f"Successfully processed {gse_id}: {len(merged_df)} samples with run_accession")
             
             # ================================================================
             # Get original filenames from SRA Entrez XML
@@ -413,12 +425,95 @@ for url in ftp_list:
                 time.sleep(0.3)  # Rate limiting
             
         except Exception as e:
-            print(f"Error processing {gse_id}: {e}")
-            gse_df = gse.phenotype_data
-            gse_dict[gse_id] = gse_df
+            print(f"Error processing {gse_id} with pysradb: {e}")
+            print(f"Attempting alternative method using Entrez directly...")
+            
+            # Alternative: Try to get run accessions directly from Entrez
+            try:
+                from Bio import Entrez
+                Entrez.email = "your_email@example.com"  # Required by NCBI
+                
+                # Search for SRA records linked to this GEO
+                search_handle = Entrez.esearch(db="sra", term=f"{gse_id}[GEO]", retmax=1000)
+                search_results = Entrez.read(search_handle)
+                search_handle.close()
+                
+                if search_results['IdList']:
+                    # Fetch the SRA records
+                    fetch_handle = Entrez.efetch(db="sra", id=search_results['IdList'], rettype="full", retmode="xml")
+                    sra_xml = fetch_handle.read()
+                    fetch_handle.close()
+                    
+                    # Parse to get run accessions
+                    root = ET.fromstring(sra_xml)
+                    run_accessions = []
+                    for run in root.iter('RUN'):
+                        run_acc = run.get('accession')
+                        if run_acc:
+                            run_accessions.append(run_acc)
+                    
+                    if run_accessions:
+                        # Create a minimal dataframe with run_accession
+                        alt_df = pd.DataFrame({'run_accession': run_accessions})
+                        gse_dict[gse_id] = alt_df
+                        print(f"Alternative method found {len(run_accessions)} run accessions for {gse_id}")
+                        
+                        # Fetch file metadata
+                        for run_acc in run_accessions:
+                            print(f"  {run_acc}...", end=" ")
+                            meta = get_sra_metadata_entrez(run_acc)
+                            file_metadata[run_acc] = meta
+                            if meta.get('original_files'):
+                                print(f"Found {len(meta['original_files'])} files")
+                            else:
+                                print(f"No original files")
+                            time.sleep(0.3)
+                    else:
+                        print(f"No run accessions found via Entrez for {gse_id}")
+                else:
+                    print(f"No SRA records found for {gse_id}")
+                    
+            except ImportError:
+                print("Biopython not installed - cannot use alternative Entrez method")
+            except Exception as e2:
+                print(f"Alternative method also failed: {e2}")
             
     except Exception as e:
         print(f"Failed to process {url}: {e}")
+
+
+# ============================================================================
+# VALIDATE AND CLEAN gse_dict
+# ============================================================================
+
+print(f"\n{'='*60}")
+print("Validating collected metadata...")
+print(f"{'='*60}")
+
+# Remove any entries without valid run_accession column
+invalid_keys = []
+for key in gse_dict.keys():
+    df = gse_dict[key]
+    if 'run_accession' not in df.columns:
+        print(f"  WARNING: {key} missing 'run_accession' column - removing")
+        invalid_keys.append(key)
+    elif len(df) == 0:
+        print(f"  WARNING: {key} has no samples - removing")
+        invalid_keys.append(key)
+    else:
+        print(f"  OK: {key} has {len(df)} samples")
+
+for key in invalid_keys:
+    del gse_dict[key]
+
+if len(gse_dict) == 0:
+    print("\nERROR: No valid datasets with run_accession found!")
+    print("This could mean:")
+    print("  1. The GEO datasets don't have linked SRA data")
+    print("  2. Network issues prevented metadata retrieval")
+    print("  3. The search text file doesn't contain valid GEO links")
+    # Create empty but valid structure to prevent downstream errors
+    gse_dict['EMPTY'] = pd.DataFrame({'run_accession': []})
 
 
 # ============================================================================
@@ -430,8 +525,9 @@ num_rows = [len(gse_dict[key]) for key in gse_dict.keys()]
 print(f'''\n{'='*60}
 METADATA SUMMARY
 {'='*60}
+Total BioProjects: {len(gse_dict)}
 Total samples: {sum(num_rows)}
-Runs with metadata: {len(file_metadata)}
+Runs with file metadata: {len(file_metadata)}
 ''')
 
 # Categorize by what we found
@@ -461,18 +557,30 @@ for run, meta in list(file_metadata.items())[:3]:
     ordered = meta.get('expected_read_types_ordered', [])
     print(f"  {run}: {ordered}")
 
-# Save
-with open('dictionary_file.pkl', 'wb') as f:
+# Save to metadata directory (we're already in metadata_dir)
+dictionary_file = os.path.join(metadata_dir, 'dictionary_file.pkl')
+with open(dictionary_file, 'wb') as f:
     pickle.dump(gse_dict, f)
-    print('\nSaved: dictionary_file.pkl')
+    print(f'\nSaved: {dictionary_file}')
 
-with open('file_metadata.pkl', 'wb') as f:
+file_metadata_pkl = os.path.join(metadata_dir, 'file_metadata.pkl')
+with open(file_metadata_pkl, 'wb') as f:
     pickle.dump(file_metadata, f)
-    print('Saved: file_metadata.pkl')
+    print(f'Saved: {file_metadata_pkl}')
 
-with open('file_metadata.json', 'w') as f:
+file_metadata_json = os.path.join(metadata_dir, 'file_metadata.json')
+with open(file_metadata_json, 'w') as f:
     json.dump(file_metadata, f, indent=2, default=str)
-    print('Saved: file_metadata.json')
+    print(f'Saved: {file_metadata_json}')
+
+# Verify files were created
+print(f"\nVerifying output files:")
+for filepath in [dictionary_file, file_metadata_pkl, file_metadata_json]:
+    if os.path.exists(filepath):
+        size = os.path.getsize(filepath)
+        print(f"  ✓ {filepath} ({size:,} bytes)")
+    else:
+        print(f"  ✗ {filepath} NOT FOUND!")
 
 print(f"\n{'='*60}")
 print("Metadata collection complete!")
