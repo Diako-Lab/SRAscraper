@@ -21,3 +21,4 @@ dependencies:
   - multiqc
   - libnsl  
   - pysradb
+  - setuptools <70
