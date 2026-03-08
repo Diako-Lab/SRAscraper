@@ -3,7 +3,12 @@ channels:
  - bioconda
 dependencies:
  - python
- - pandas
+ - pandas=2.2.3
+ - numpy=1.26.4
  - parallel-fastq-dump
  - fastqc
  - multiqc
+ - samtools
+ - requests
+ - wget
+ - 10x_bamtofastq
