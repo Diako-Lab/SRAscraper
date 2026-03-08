@@ -21,3 +21,4 @@ dependencies:
   - multiqc
   - libnsl  
   - pysradb
+  - numpy=1.26.4
