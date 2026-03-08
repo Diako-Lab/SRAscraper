@@ -1,0 +1,45 @@
+# Build artifacts from setup.py install
+build/
+dist/
+*.egg-info/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+.env/
+.venv/
+env/
+venv/
+ENV/
+
+# Conda environments
+.conda/
+
+# IDE settings
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Jupyter notebooks
+.ipynb_checkpoints/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Snakemake artifacts
+.snakemake/
+
+# Output data (uncomment if you want to ignore pipeline outputs)
+# *.pkl
+# *.fastq.gz
+# QC/
+# logs/
+# metadata/
