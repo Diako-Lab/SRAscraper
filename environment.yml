@@ -6,7 +6,7 @@ dependencies:
   - python >=3.10,<3.11.0a0
   - r-base
   - spyder
-  - sra-tools >=3.0.0
+  - sra-tools >=3.0.0,<=3.2.1
   - parallel-fastq-dump
   - jupyterlab
   - firefox
