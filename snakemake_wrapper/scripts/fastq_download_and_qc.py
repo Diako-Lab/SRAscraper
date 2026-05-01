@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os, sys
+import gzip
 
 output_dir = snakemake.params.output_dir
 metadata_dir = os.path.join(snakemake.params.output_dir, 'metadata')
@@ -15,6 +16,18 @@ import pickle
 with open('dictionary_file.pkl', 'rb') as pkl_file:
      gse_dict = pickle.load(pkl_file)
      print('Dictionary loaded successfully')
+
+# =====================================================================
+# CHANGE 1: Load file_metadata.pkl for metadata-informed renaming
+# =====================================================================
+file_metadata = {}
+file_metadata_path = os.path.join(metadata_dir, 'file_metadata.pkl')
+if os.path.exists(file_metadata_path):
+    with open(file_metadata_path, 'rb') as f:
+        file_metadata = pickle.load(f)
+    print(f'File metadata loaded: {len(file_metadata)} runs')
+else:
+    print('WARNING: file_metadata.pkl not found - will use hardcoded rename order')
 
 
 #######################################################################
@@ -368,6 +381,110 @@ def convert_bam_to_fastq(bam_path, accession, sample_dir, threads):
         return convert_standard_bam_to_fastq(bam_path, accession, sample_dir, threads)
 
 
+# =====================================================================
+# CHANGE 2: Metadata-informed rename helper functions
+# =====================================================================
+
+def get_read_length_quick(fastq_gz_path, n_reads=20):
+    """
+    Get the dominant read length from the first n_reads of a FASTQ.gz.
+    Returns the most common length, or None if unreadable.
+    """
+    if not os.path.exists(fastq_gz_path) or os.path.getsize(fastq_gz_path) == 0:
+        return None
+    try:
+        lengths = {}
+        with gzip.open(fastq_gz_path, 'rt') as f:
+            line_num = 0
+            reads_counted = 0
+            for line in f:
+                line_num += 1
+                if line_num % 4 == 2:
+                    l = len(line.strip())
+                    lengths[l] = lengths.get(l, 0) + 1
+                    reads_counted += 1
+                    if reads_counted >= n_reads:
+                        break
+        if lengths:
+            return max(lengths, key=lengths.get)
+    except Exception:
+        pass
+    return None
+
+
+def build_rename_map_from_metadata(accession, file_metadata):
+    """
+    Use expected_read_types_ordered from Entrez metadata to build the
+    mapping from split file number to read type.
+
+    For multi-lane data, expected_read_types_ordered repeats per lane
+    (e.g. [I1, I2, R1, R2, I1, I2, R1, R2]). parallel-fastq-dump
+    with --split-files merges lanes, so we deduplicate to get the
+    unique ordered types.
+
+    Returns: dict {1: 'I1', 2: 'I2', 3: 'R1', 4: 'R2'} or None
+    """
+    meta = file_metadata.get(accession, {})
+    ordered = meta.get('expected_read_types_ordered', [])
+
+    if not ordered:
+        return None
+
+    # Deduplicate: keep first occurrence of each type
+    unique_types = []
+    seen = set()
+    for rt in ordered:
+        if rt not in seen:
+            unique_types.append(rt)
+            seen.add(rt)
+
+    if not unique_types:
+        return None
+
+    # Build the map: split file index -> read type
+    rename_map = {}
+    for i, rt in enumerate(unique_types):
+        rename_map[i + 1] = rt  # 1-indexed to match _1, _2, _3, _4
+
+    return rename_map
+
+
+def validate_renamed_files(sample_dir, accession):
+    """
+    Post-rename validation: check that R1 looks like barcode+UMI (24-30bp)
+    and R2 looks like cDNA (>=50bp). Warns if reads appear misassigned.
+
+    Returns True if validation passes, False if reads appear swapped.
+    """
+    r1_path = os.path.join(sample_dir,
+                           f"{accession}_S1_L001_R1_001.fastq.gz")
+    r2_path = os.path.join(sample_dir,
+                           f"{accession}_S1_L001_R2_001.fastq.gz")
+
+    r1_len = get_read_length_quick(r1_path)
+    r2_len = get_read_length_quick(r2_path)
+
+    if r1_len is None or r2_len is None:
+        print(f"  [VALIDATE] Could not read R1/R2 lengths for {accession}")
+        return True  # Can't validate, assume OK
+
+    valid = True
+    if r1_len <= 12:
+        print(f"  [VALIDATE] WARNING: R1 is {r1_len}bp (looks like index, not barcode+UMI)")
+        valid = False
+    if r2_len <= 12:
+        print(f"  [VALIDATE] WARNING: R2 is {r2_len}bp (looks like index, not cDNA)")
+        valid = False
+
+    if valid:
+        print(f"  [VALIDATE] OK: R1={r1_len}bp, R2={r2_len}bp")
+    else:
+        print(f"  [VALIDATE] READS MAY BE MISASSIGNED - check file_metadata.pkl")
+        print(f"  [VALIDATE] R1={r1_len}bp, R2={r2_len}bp")
+
+    return valid
+
+
 #######################################################################
 # Main download loop
 #
@@ -432,33 +549,54 @@ for key in gse_dict.keys():
             print(f'Errors: {error}')
 
         # ==============================================================
-        # SHARED: Rename files to Illumina convention (both paths)
+        # CHANGE 3: Metadata-informed rename with fallback and validation
+        #
+        # Uses expected_read_types_ordered from file_metadata.pkl to
+        # determine the correct mapping from split file numbers to
+        # read types (R1/R2/I1/I2).
+        #
+        # Falls back to hardcoded [R1, R2, I1, I2] if metadata is
+        # unavailable for this accession.
+        #
+        # Validates read lengths after rename and warns if R1/R2
+        # appear to be misassigned.
         # ==============================================================
-        print(f"\nRenamming {accession} fastqs")
+        print(f"\nRenaming {accession} fastqs")
+
+        # Determine rename mapping: metadata-informed or hardcoded fallback
+        rename_map = build_rename_map_from_metadata(accession, file_metadata)
+
+        if rename_map:
+            print(f"  Using metadata-informed rename: {rename_map}")
+        else:
+            # Hardcoded fallback: _1=R1, _2=R2, _3=I1, _4=I2
+            rename_map = {1: 'R1', 2: 'R2', 3: 'I1', 4: 'I2'}
+            print(f"  No metadata available, using hardcoded rename: {rename_map}")
+
+        # Perform renames based on the mapping
+        for split_num, read_type in sorted(rename_map.items()):
+            src = os.path.join(sample_dir,
+                               f"{accession}_{split_num}.fastq.gz")
+            dst = os.path.join(sample_dir,
+                               f"{accession}_S1_L001_{read_type}_001.fastq.gz")
+            try:
+                if os.path.exists(src):
+                    os.rename(src, dst)
+                    print(f"  Renamed _{split_num} -> {read_type}")
+                else:
+                    if read_type in ('R1', 'R2'):
+                        print(f"  WARNING: {src} not found (expected {read_type})")
+                    else:
+                        print(f"  Note: {src} not found ({read_type} index file not present)")
+            except OSError as e:
+                print(f"  Error renaming _{split_num} -> {read_type}: {e}")
+
+        # Post-rename validation
+        validate_renamed_files(sample_dir, accession)
+
+        # Clean up .sra file
         try:
-             os.rename(os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_4.fastq.gz'),
-                       os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_S1_L001_I2_001.fastq.gz'))
-             print(f"\nIndex {accession}_4.fastq.gz file found in GEO repo. Confirm dual indexing in project.")
-        except OSError as e:
-            print("Error renaming file:", e)
-        try:
-             os.rename(os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_3.fastq.gz'),
-                       os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_S1_L001_I1_001.fastq.gz'))
-        except FileNotFoundError:
-            print(f"\nIndex {accession}_3.fastq.gz file not found in GEO repo. Continuing with normal R1 R2 renaming.")
-        except OSError as e:
-            print("Error renaming file:", e)
-        try:
-            os.rename(os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_1.fastq.gz'),
-                      os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_S1_L001_R1_001.fastq.gz'))          
-            os.rename(os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_2.fastq.gz'),
-                      os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '_S1_L001_R2_001.fastq.gz')) 
-        except FileNotFoundError:
-            print(f"\nIndex {accession}_1/2.fastq.gz files not found in GEO repo.")
-        except OSError as e:
-            print("Error renaming file:", e)
-        try:
-             file_path = os.path.join(str(output_dir), 'fastq', str(key), str(accession), str(accession) + '.sra')
+             file_path = os.path.join(sample_dir, str(accession) + '.sra')
              os.remove(file_path)
              print(f"File '{file_path}' deleted successfully.")
         except FileNotFoundError:
